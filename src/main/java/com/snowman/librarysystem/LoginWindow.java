@@ -1,4 +1,4 @@
-package snowman.librarysystem;
+package com.snowman.librarysystem;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package snowman.librarysystem;
+package com.snowman.librarysystem;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,8 +15,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import snowman.business.ControllerInterface;
-import snowman.business.SystemController;
+import com.snowman.business.ControllerInterface;
+import com.snowman.business.SystemController;
 
 
 public class LibrarySystem extends JFrame implements LibWindow {

@@ -1,4 +1,4 @@
-package snowman.dataaccess;
+package com.snowman.dataaccess;
 
 import java.io.Serializable;
 

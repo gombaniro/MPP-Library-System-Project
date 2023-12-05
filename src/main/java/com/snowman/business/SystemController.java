@@ -1,13 +1,13 @@
-package snowman.business;
+package com.snowman.business;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import snowman.dataaccess.Auth;
-import snowman.dataaccess.DataAccess;
-import snowman.dataaccess.DataAccessFacade;
-import snowman.dataaccess.User;
+import com.snowman.dataaccess.Auth;
+import com.snowman.dataaccess.DataAccess;
+import com.snowman.dataaccess.DataAccessFacade;
+import com.snowman.dataaccess.User;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;

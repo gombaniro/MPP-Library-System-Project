@@ -1,4 +1,4 @@
-package snowman.librarysystem;
+package com.snowman.librarysystem;
 
 public interface LibWindow {
 	void init();

@@ -1,4 +1,4 @@
-package snowman.business;
+package com.snowman.business;
 
 import java.util.List;
 

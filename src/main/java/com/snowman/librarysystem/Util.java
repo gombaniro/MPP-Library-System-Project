@@ -1,4 +1,4 @@
-package snowman.librarysystem;
+package com.snowman.librarysystem;
 
 import java.awt.Color;
 import java.awt.Component;

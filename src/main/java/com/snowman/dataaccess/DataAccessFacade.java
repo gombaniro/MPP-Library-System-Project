@@ -1,4 +1,4 @@
-package snowman.dataaccess;
+package com.snowman.dataaccess;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,8 +9,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
-import snowman.business.Book;
-import snowman.business.LibraryMember;
+import com.snowman.business.Book;
+import com.snowman.business.LibraryMember;
 
 
 public class DataAccessFacade implements DataAccess {

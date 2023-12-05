@@ -1,9 +1,9 @@
-package snowman.business;
+package com.snowman.business;
 
 import java.util.*;
 
-import snowman.dataaccess.DataAccess;
-import snowman.dataaccess.DataAccessFacade;
+import com.snowman.dataaccess.DataAccess;
+import com.snowman.dataaccess.DataAccessFacade;
 
 public class Main {
 

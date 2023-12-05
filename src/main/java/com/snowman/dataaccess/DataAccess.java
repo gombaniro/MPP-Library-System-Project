@@ -1,9 +1,9 @@
-package snowman.dataaccess;
+package com.snowman.dataaccess;
 
 import java.util.HashMap;
 
-import snowman.business.Book;
-import snowman.business.LibraryMember;
+import com.snowman.business.Book;
+import com.snowman.business.LibraryMember;
 
 public interface DataAccess { 
 	public HashMap<String,Book> readBooksMap();
