@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
+import java.nio.file.Paths;
 
 import snowman.business.Book;
 import snowman.business.LibraryMember;
@@ -20,7 +21,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	public static final String OUTPUT_DIR =
-			String.valueOf(java.nio.file.Paths.get( System.getProperty("user.dir"),
+			String.valueOf(Paths.get( System.getProperty("user.dir"),
 					"src", "main", "java", "snowman", "dataaccess", "storage"));
 
 
