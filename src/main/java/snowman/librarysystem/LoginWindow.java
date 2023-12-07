@@ -190,13 +190,14 @@ public class LoginWindow extends JFrame implements LibWindow {
 				String passwordValue = password.getText();
 				try {
 					ci.login(idValue, passwordValue);
-					// Close this window and open new one
+
+					JOptionPane.showMessageDialog(this, "Login successful");
+
+					LibrarySystem.hideAllWindows();
+					LibrarySystem.INSTANCE.setVisible(true);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(this, "Login failed: " + ex.getMessage());
-					return;
 				}
-
-				JOptionPane.showMessageDialog(this, "Login successful");
     		});
     	}
 	
