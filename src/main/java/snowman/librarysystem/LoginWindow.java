@@ -1,5 +1,8 @@
 package snowman.librarysystem;
 
+import snowman.business.ControllerInterface;
+import snowman.business.SystemController;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,7 +43,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 	private JButton loginButton;
 	private JButton logoutButton;
 	
-	
+	private ControllerInterface ci = new SystemController();
 	
 	
 	public boolean isInitialized() {
@@ -182,8 +185,18 @@ public class LoginWindow extends JFrame implements LibWindow {
     	
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
-    			JOptionPane.showMessageDialog(this,"Successful Login");
-    				
+
+				String idValue = username.getText();
+				String passwordValue = password.getText();
+				try {
+					ci.login(idValue, passwordValue);
+					// Close this window and open new one
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(this, "Login failed: " + ex.getMessage());
+					return;
+				}
+
+				JOptionPane.showMessageDialog(this, "Login successful");
     		});
     	}
 	
