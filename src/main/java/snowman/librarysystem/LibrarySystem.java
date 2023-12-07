@@ -10,6 +10,10 @@ import javax.swing.*;
 
 import snowman.business.ControllerInterface;
 import snowman.business.SystemController;
+import snowman.librarysystem.dialogs.AddBookCopyDialog;
+import snowman.librarysystem.dialogs.AddMemberDialog;
+import snowman.librarysystem.eventHandlers.AddCopyBookListener;
+import snowman.librarysystem.eventHandlers.AddMemberListener;
 
 
 public class LibrarySystem extends JFrame implements LibWindow {
@@ -18,7 +22,11 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JPanel mainPanel;
 	JMenuBar menuBar;
     JMenu options;
-    JMenuItem login, allBookIds, allMemberIds; 
+    JMenuItem login, allBookIds, allMemberIds;
+	JMenu books;
+	JMenuItem addBook, list;
+	JMenu members;
+	JMenuItem addMember, memberRecord;
     String pathToImage;
     private boolean isInitialized = false;
     
@@ -82,6 +90,27 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
+
+		// Add a book menu
+		books = new JMenu("Book");
+		addBook = new JMenuItem("Add");
+		addBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
+				this, "Add a book copy", true)));
+		list  = new JMenuItem("List");
+		books.add(addBook);
+		books.add(list);
+
+		// Add a member menu
+		members = new JMenu("Member");
+		addMember = new JMenuItem("add");
+		addMember.addActionListener(new AddMemberListener(new AddMemberDialog(
+				this,"Add a member", true)));
+		memberRecord = new JMenuItem("Record");
+		members.add(addMember);
+		members.add(memberRecord);
+
+		menuBar.add(books);
+		menuBar.add(members);
     }
     
     class LoginListener implements ActionListener {
