@@ -29,5 +29,5 @@ public class Main {
 			int frameHeight = f.getSize().height;
 			int frameWidth = f.getSize().width;
 			f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
-		}
+	   }
 }
