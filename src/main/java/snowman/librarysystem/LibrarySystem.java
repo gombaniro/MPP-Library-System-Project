@@ -1,12 +1,15 @@
 package snowman.librarysystem;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import snowman.business.ControllerInterface;
 import snowman.business.SystemController;
@@ -56,7 +59,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     
     private void setPathToImage() {
     	String currDirectory = System.getProperty("user.dir");
-    	pathToImage = currDirectory+"\\src\\librarysystem\\library.jpg";
+    	pathToImage = currDirectory+"\\src\\main\\java\\snowman\\librarysystem\\library.jpg";
     }
     
     private void insertSplashImage() {
@@ -65,24 +68,54 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
     private void createMenus() {
     	menuBar = new JMenuBar();
-		menuBar.setBorder(BorderFactory.createRaisedBevelBorder());
 		addMenuItems();
 		setJMenuBar(menuBar);		
     }
     
     private void addMenuItems() {
-       options = new JMenu("Options");  
- 	   menuBar.add(options);
- 	   login = new JMenuItem("Login");
- 	   login.addActionListener(new LoginListener());
- 	   allBookIds = new JMenuItem("All Book Ids");
- 	   allBookIds.addActionListener(new AllBookIdsListener());
- 	   allMemberIds = new JMenuItem("All Member Ids");
- 	   allMemberIds.addActionListener(new AllMemberIdsListener());
- 	   options.add(login);
- 	   options.add(allBookIds);
- 	   options.add(allMemberIds);
+		login = createInteractiveButton("Login");
+		login.addActionListener(new LoginListener());
+		allBookIds = createInteractiveButton("All Book Ids");
+		allBookIds.addActionListener(new AllBookIdsListener());
+		allMemberIds = createInteractiveButton("All Member Ids");
+		allMemberIds.addActionListener(new AllMemberIdsListener());
+
+		menuBar.add(login);
+		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+		menuBar.add(allBookIds);
+		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+		menuBar.add(allMemberIds);
     }
+
+	private static JMenuItem createInteractiveButton(String text) {
+		JMenuItem button = new JMenuItem(text);
+		Border defaultBorder = BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+				BorderFactory.createEmptyBorder(5, 10, 5, 10) // Set margin
+		);
+		button.setBorder(defaultBorder);
+
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setBackground(new Color(200, 200, 200)); // Change background on hover
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setBackground(null); // Reset background on exit
+			}
+		});
+
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.setBackground(new Color(150, 150, 255)); // Change background on click
+			}
+		});
+
+		return button;
+	}
     
     class LoginListener implements ActionListener {
 
