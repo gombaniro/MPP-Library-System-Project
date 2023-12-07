@@ -88,8 +88,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         allMemberIds = createInteractiveButton("All Member Ids");
         allMemberIds.addActionListener(new AllMemberIdsListener());
         // Add a book menu
-//        books = new JMenu("Book");
-        addMember = createInteractiveButton("Add Book");
+		addBook = createInteractiveButton("Add Book");
         addBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
                 this, "Add a book copy", true)));
 //        list  = new JMenuItem("List");
@@ -97,7 +96,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
 //        books.add(list);
 
         // Add a member menu
-//        members = new JMenu("Member");
         addMember = createInteractiveButton("Add Member");
         addMember.addActionListener(new AddMemberListener(new AddMemberDialog(
                 this,"Add a member", true)));
