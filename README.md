@@ -1,4 +1,4 @@
-# Library Management System Project
+# Library System Project #TeamSnowman
 
 &nbsp;&nbsp;
 
@@ -10,7 +10,7 @@
 
 ## Overview
 
-This collaborative project involves the creation of a Library Management System, tailored for librarians and administrators. The system provides a seamless experience for tasks such as member management, book checkout, and library resource organization.
+Create a system that empowers librarians to check out books and lets administrators add/edit books and members. Some books play hard to get, available for only 7 days!
 
 ## Team Members
 
@@ -57,3 +57,7 @@ This collaborative project involves the creation of a Library Management System,
 ## Presentation
 
 The project was presented as part of a university course, showcasing the design and implementation of the Library Management System.
+
+---
+
+**Simplify your library management with our pragmatic solution! 📚🤓**
