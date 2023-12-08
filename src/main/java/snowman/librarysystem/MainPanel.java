@@ -1,14 +1,5 @@
 package snowman.librarysystem;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.List;
-
-import javax.swing.*;
-
 import snowman.business.ControllerInterface;
 import snowman.business.SystemController;
 import snowman.librarysystem.dialogs.AddBookCopyDialog;
@@ -16,10 +7,18 @@ import snowman.librarysystem.dialogs.AddMemberDialog;
 import snowman.librarysystem.eventHandlers.AddCopyBookListener;
 import snowman.librarysystem.eventHandlers.AddMemberListener;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 
-public class LibrarySystem extends JFrame implements LibWindow {
+
+public class MainPanel extends JPanel implements LibWindow {
 	ControllerInterface ci = new SystemController();
-	public final static LibrarySystem INSTANCE =new LibrarySystem();
+	public final static MainPanel INSTANCE =new MainPanel();
 	JPanel mainPanel;
 	JMenuBar menuBar;
     JMenu options;
@@ -28,67 +27,37 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JButton addBook, list;
 	JMenu members;
 	JButton addMember, memberRecord;
-    String pathToImage;
     private boolean isInitialized = false;
-    
-    private static LibWindow[] allWindows = { 
-    	LibrarySystem.INSTANCE,
-		LoginPanel.INSTANCE,
-		AllMemberIdsWindow.INSTANCE,	
-		AllBookIdsWindow.INSTANCE
-	};
-    	
-	public static void hideAllWindows() {		
-		for(LibWindow frame: allWindows) {
-			frame.setVisible(false);			
-		}
-	}
-     
-    private LibrarySystem() {}
+
+    public MainPanel() {}
     
     public void init() {
-//		createMenus();
+		setLayout(new BorderLayout());
+
+		createMenus();
+    	insertSplashImage();
+		
 		//pack();
-		LoginPanel loginWindow = LoginPanel.INSTANCE;
-		loginWindow.init();
-		getContentPane().add(loginWindow);
 
 		setSize(660,500);
 		isInitialized = true;
     }
 
-	public void changePanel(JPanel newPanel) {
-//		LibrarySystem.hideAllWindows();
-		getContentPane().removeAll();
-		getContentPane().add(newPanel);
-		getContentPane().validate();
-		getContentPane().repaint();
-	}
-    
-    private void formatContentPane() {
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new GridLayout(1,1));
-		getContentPane().add(mainPanel);	
-	}
-    
-    private void setPathToImage() {
-		 pathToImage = String.valueOf(Paths.get( System.getProperty("user.dir"),
-				"src", "main", "java", "snowman", "librarysystem", "library.jpg"));
-    }
-    
     private void insertSplashImage() {
+		String pathToImage = String.valueOf(Paths.get( System.getProperty("user.dir"),
+				"src", "main", "java", "snowman", "librarysystem", "library.jpg"));
         ImageIcon image = new ImageIcon(pathToImage);
-		mainPanel.add(new JLabel(image));	
+		add(new JLabel(image), BorderLayout.SOUTH);
     }
     private void createMenus() {
     	menuBar = new JMenuBar();
 		addMenuItems();
-		setJMenuBar(menuBar);		
+//		setJMenuBar(menuBar);
     }
     
     private void addMenuItems() {
-        login = new JButton("Login");
-        login.addActionListener(new LoginListener());
+//        login = new JButton("Login");
+//        login.addActionListener(new LoginListener());
         allBookIds = new JButton("All Book Ids");
         allBookIds.addActionListener(new AllBookIdsListener());
         allMemberIds = new JButton("All Member Ids");
@@ -97,15 +66,15 @@ public class LibrarySystem extends JFrame implements LibWindow {
         // Add a book menu
 		addBook = new JButton("Add Book");
         addBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
-                this, "Add a book copy", true)));
+                null, "Add a book copy", true)));
 
         // Add a member menu
         addMember = new JButton("Add Member");
         addMember.addActionListener(new AddMemberListener(new AddMemberDialog(
-                this,"Add a member", true)));
+				null,"Add a member", true)));
 
-        menuBar.add(login);
-        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+//        menuBar.add(login);
+//        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
         menuBar.add(allBookIds);
         menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
         menuBar.add(allMemberIds);
@@ -113,6 +82,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
         menuBar.add(addBook);
         menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
         menuBar.add(addMember);
+
+		add(menuBar, BorderLayout.PAGE_START);
     }
 
     class LoginListener implements ActionListener {
@@ -126,8 +97,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
 			// main panel
 //			LibrarySystem.hideAllWindows();
-			MainPanel.INSTANCE.init();
-			changePanel(MainPanel.INSTANCE);
+//			changePanel(this);
 //			LoginPanel.INSTANCE.init();
 //			Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
 //			LoginPanel.INSTANCE.setVisible(true);
@@ -166,8 +136,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			AllMemberIdsWindow.INSTANCE.init();
 			AllMemberIdsWindow.INSTANCE.pack();
 			AllMemberIdsWindow.INSTANCE.setVisible(true);
-			
-			
+
+
 			LibrarySystem.hideAllWindows();
 			AllBookIdsWindow.INSTANCE.init();
 			

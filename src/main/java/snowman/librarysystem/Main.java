@@ -13,10 +13,9 @@ import javax.swing.JFrame;
 public class Main {
 
 	public static void main(String[] args) {
-		String loginStatus = SystemController.currentAuth == null ? " (Not Login in) ": SystemController.currentAuth+"";
-	      EventQueue.invokeLater(() -> 
+	      EventQueue.invokeLater(() ->
 	         {
-	            LibrarySystem.INSTANCE.setTitle("Sample Library Application" + loginStatus);
+ 				updateLoginStatus();
 	            LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	            
 	            LibrarySystem.INSTANCE.init();
@@ -24,6 +23,13 @@ public class Main {
 	            LibrarySystem.INSTANCE.setVisible(true);
 	         });
 	   }
+
+		public static void updateLoginStatus() {
+			String loginStatus = SystemController.currentAuth == null
+					? " (Not Logged in) "
+					: SystemController.currentAuth+"";
+			LibrarySystem.INSTANCE.setTitle("Sample Library Application. Logged in as: " + loginStatus);
+		}
 	   
 	   public static void centerFrameOnDesktop(Component f) {
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
