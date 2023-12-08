@@ -26,5 +26,20 @@ final public class LibraryMember extends Person implements Serializable {
 				", " + getTelephone() + " " + getAddress();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+		    return false;
+		if ( !(obj instanceof LibraryMember)) {
+			return false;
+		}
+		LibraryMember that = (LibraryMember) obj;
+		return this.getFirstName().equals(that.getFirstName()) &&
+				    getLastName().equals(that.getLastName()) &&
+				    getTelephone().equals(that.getTelephone());
+	}
+
 	private static final long serialVersionUID = -2226197306790714013L;
 }
