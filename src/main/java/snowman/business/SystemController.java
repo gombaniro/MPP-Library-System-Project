@@ -25,6 +25,12 @@ public class SystemController implements ControllerInterface {
 		currentAuth = map.get(id).getAuthorization();
 		
 	}
+
+	@Override
+	public void checkout(String bookISBN, String memberID) throws CheckoutException {
+
+	}
+
 	@Override
 	public List<String> allMemberIds() {
 		DataAccess da = new DataAccessFacade();

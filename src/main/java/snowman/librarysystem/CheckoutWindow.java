@@ -2,13 +2,12 @@ package snowman.librarysystem;
 
 import snowman.business.ControllerInterface;
 import snowman.business.SystemController;
+import snowman.dataaccess.Auth;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
-/**
- * when a librarian is login, this window is visible
- */
 public class CheckoutWindow extends JFrame implements LibWindow {
 	public static final CheckoutWindow INSTANCE = new CheckoutWindow();
     ControllerInterface ci = new SystemController();
@@ -20,58 +19,169 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 	private JPanel topPanel;
 	private JPanel middlePanel;
 	private JPanel lowerPanel;
-	private TextArea textArea;
+//	private TextArea textArea;
+
+	private JPanel upperHalf;
+	private JPanel middleHalf;
+	private JPanel lowerHalf;
+
+	private JPanel leftTextPanel;
+	private JPanel rightTextPanel;
+	private JLabel bookLabel = new JLabel("bookISBN: ");
+	private JLabel memberLabel = new JLabel("memberID: ");
+
+
+	private JTextField book;
+	private JTextField member;
+
+  	private JButton checkoutButton;
+
+	  private JButton clearButton;
+    private JTextField messageBar = new JTextField();
+	public void clear() {
+		messageBar.setText("");
+	}
 
 	private CheckoutWindow() {}
 	
 	public void init() {
 		mainPanel = new JPanel();
-		mainPanel.setLayout(new BorderLayout());
+		defineUpperHalf();
+		defineMiddleHalf();
+		defineLowerHalf();
+		BorderLayout bl = new BorderLayout();
+		bl.setVgap(30);
+		mainPanel.setLayout(bl);
+		mainPanel.add(upperHalf, BorderLayout.NORTH);
+		mainPanel.add(middleHalf, BorderLayout.CENTER);
+		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
+		getContentPane().add(mainPanel);
+		isInitialized(true);
+		pack();
+	}
+
+	private void defineUpperHalf() {
+
+		upperHalf = new JPanel();
+		upperHalf.setLayout(new BorderLayout());
 		defineTopPanel();
 		defineMiddlePanel();
 		defineLowerPanel();
-		mainPanel.add(topPanel, BorderLayout.NORTH);
-		mainPanel.add(middlePanel, BorderLayout.CENTER);	
-		mainPanel.add(lowerPanel, BorderLayout.SOUTH);
-		getContentPane().add(mainPanel);
-		isInitialized = true;
+		upperHalf.add(topPanel, BorderLayout.NORTH);
+		upperHalf.add(middlePanel, BorderLayout.CENTER);
+		upperHalf.add(lowerPanel, BorderLayout.SOUTH);
+
 	}
-	
-	public void defineTopPanel() {
-		topPanel = new JPanel();
-		JLabel AllIDsLabel = new JLabel("All Member IDs");
-		Util.adjustLabelFont(AllIDsLabel, Util.DARK_BLUE, true);
-		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		topPanel.add(AllIDsLabel);
+	private void defineMiddleHalf() {
+		middleHalf = new JPanel();
+		middleHalf.setLayout(new BorderLayout());
+		JSeparator s = new JSeparator();
+		s.setOrientation(SwingConstants.VERTICAL);
+		//middleHalf.add(Box.createRigidArea(new Dimension(0,50)));
+		middleHalf.add(s, BorderLayout.SOUTH);
+
 	}
-	
-	public void defineMiddlePanel() {
-		middlePanel = new JPanel();
-		FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
-		middlePanel.setLayout(fl);
-		textArea = new TextArea(8,20);
-		middlePanel.add(textArea);
-		
-	}
-	
-	public void defineLowerPanel() {
-		lowerPanel = new JPanel();
-		FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
-		lowerPanel.setLayout(fl);
-		JButton backButton = new JButton("<== Back to Main");
+	private void defineLowerHalf() {
+
+		lowerHalf = new JPanel();
+		lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		JButton backButton = new JButton("<= Back to Main");
 		addBackButtonListener(backButton);
-		lowerPanel.add(backButton);
+		lowerHalf.add(backButton);
+
 	}
-	
-	public void setData(String data) {
-		textArea.setText(data);
+	private void defineTopPanel() {
+		topPanel = new JPanel();
+		JPanel intPanel = new JPanel(new BorderLayout());
+		intPanel.add(Box.createRigidArea(new Dimension(0,20)), BorderLayout.NORTH);
+		JLabel loginLabel = new JLabel("Checkout");
+		Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
+		intPanel.add(loginLabel, BorderLayout.CENTER);
+		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		topPanel.add(intPanel);
+
 	}
+
+
+
+	private void defineMiddlePanel() {
+		middlePanel=new JPanel();
+		middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		defineLeftTextPanel();
+		defineRightTextPanel();
+		middlePanel.add(leftTextPanel);
+		middlePanel.add(rightTextPanel);
+	}
+	private void defineLowerPanel() {
+		lowerPanel = new JPanel();
+		checkoutButton = new JButton("Checkout");
+		addCheckoutButtonListener(checkoutButton);
+		lowerPanel.add(checkoutButton);
+	}
+
+	private void defineLeftTextPanel() {
+
+		JPanel topText = new JPanel();
+		JPanel bottomText = new JPanel();
+		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+
+		book = new JTextField(10);
+		bookLabel = new JLabel("BookISBN");
+		bookLabel.setFont(Util.makeSmallFont(bookLabel.getFont()));
+		topText.add(book);
+		bottomText.add(bookLabel);
+
+		leftTextPanel = new JPanel();
+		leftTextPanel.setLayout(new BorderLayout());
+		leftTextPanel.add(topText,BorderLayout.NORTH);
+		leftTextPanel.add(bottomText,BorderLayout.CENTER);
+	}
+	private void defineRightTextPanel() {
+
+		JPanel topText = new JPanel();
+		JPanel bottomText = new JPanel();
+		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+
+		member = new JPasswordField(10);
+		memberLabel = new JLabel("MemberID");
+		memberLabel.setFont(Util.makeSmallFont(memberLabel.getFont()));
+		topText.add(member);
+		bottomText.add(memberLabel);
+
+		rightTextPanel = new JPanel();
+		rightTextPanel.setLayout(new BorderLayout());
+		rightTextPanel.add(topText,BorderLayout.NORTH);
+		rightTextPanel.add(bottomText,BorderLayout.CENTER);
+	}
+
 	private void addBackButtonListener(JButton butn) {
 		butn.addActionListener(evt -> {
-		   LibrarySystem.hideAllWindows();
-		   LibrarySystem.INSTANCE.setVisible(true);
-	    });
+			LibrarySystem.hideAllWindows();
+			LibrarySystem.INSTANCE.setVisible(true);
+		});
 	}
+
+	private void addCheckoutButtonListener(JButton butn) {
+		butn.addActionListener(evt -> {
+
+			String book = bookLabel.getText();;
+			String member = memberLabel.getText();
+			try {
+				ci.checkout(book, member);
+
+				JOptionPane.showMessageDialog(this, "checkout successful");
+				LibrarySystem.hideAllWindows();
+				LibrarySystem.INSTANCE.setVisible(true);
+				LibrarySystem.INSTANCE.setTitle("Sample Library Application");
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, "Checkout failed: " + ex.getMessage());
+			}
+		});
+	}
+
 
 	@Override
 	public boolean isInitialized() {
@@ -82,7 +192,6 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 	@Override
 	public void isInitialized(boolean val) {
 		isInitialized = val;
-		
 	}
 	
 }

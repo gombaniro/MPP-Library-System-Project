@@ -21,7 +21,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     JMenu options;
 	JButton login, allBookIds, allMemberIds;
 	JMenu books;
-	JButton addBook, list;
+	JButton addBook, list, logout, checkout;
 	JMenu members;
 	JButton addMember, memberRecord;
     String pathToImage;
@@ -31,7 +31,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	LibrarySystem.INSTANCE,
 		LoginPanel.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
-		AllBookIdsWindow.INSTANCE
+		AllBookIdsWindow.INSTANCE,
+			CheckoutWindow.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -58,6 +59,22 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		getContentPane().validate();
 		getContentPane().repaint();
 	}
+
+	class CheckoutListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (SystemController.currentAuth == null) {
+				JOptionPane.showMessageDialog(LibrarySystem.INSTANCE, "Not log in");
+				return;
+			}
+			LibrarySystem.hideAllWindows();
+			CheckoutWindow.INSTANCE.init();
+			Util.centerFrameOnDesktop(CheckoutWindow.INSTANCE);
+			CheckoutWindow.INSTANCE.setVisible(true);
+		}
+	}
+
 
 	@Override
 	public boolean isInitialized() {
