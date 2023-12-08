@@ -20,12 +20,12 @@ public class AddMemberListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (SystemController.currentAuth == null) {
-            JOptionPane.showMessageDialog(LibrarySystem.INSTANCE, "You have to login");
+            JOptionPane.showMessageDialog(LibrarySystem.INSTANCE, "You have to login as admin");
             return;
         }
 
-        if (!SystemController.currentAuth.equals(Auth.ADMIN)) {
-            JOptionPane.showMessageDialog(LibrarySystem.INSTANCE, "You have to be admin");
+        if (!(SystemController.currentAuth.equals(Auth.ADMIN) || SystemController.currentAuth.equals(Auth.BOTH))) {
+            JOptionPane.showMessageDialog(LibrarySystem.INSTANCE, "You need to admin privileges");
             return;
         }
         dialog.setVisible(true);
