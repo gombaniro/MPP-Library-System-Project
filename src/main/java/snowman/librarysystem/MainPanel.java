@@ -2,6 +2,7 @@ package snowman.librarysystem;
 
 import snowman.business.ControllerInterface;
 import snowman.business.SystemController;
+import snowman.dataaccess.Auth;
 import snowman.librarysystem.dialogs.AddBookCopyDialog;
 import snowman.librarysystem.dialogs.AddMemberDialog;
 import snowman.librarysystem.eventHandlers.AddCopyBookListener;
@@ -56,32 +57,40 @@ public class MainPanel extends JPanel implements LibWindow {
     }
     
     private void addMenuItems() {
-//        login = new JButton("Login");
-//        login.addActionListener(new LoginListener());
         allBookIds = new JButton("All Book Ids");
         allBookIds.addActionListener(new AllBookIdsListener());
         allMemberIds = new JButton("All Member Ids");
         allMemberIds.addActionListener(new AllMemberIdsListener());
 
-        // Add a book menu
-		addBook = new JButton("Add Book");
-        addBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
-                null, "Add a book copy", true)));
+		menuBar.add(allBookIds);
+		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+		menuBar.add(allMemberIds);
+		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 
-        // Add a member menu
-        addMember = new JButton("Add Member");
-        addMember.addActionListener(new AddMemberListener(new AddMemberDialog(
-				null,"Add a member", true)));
+		if (SystemController.currentAuth == Auth.ADMIN
+			|| SystemController.currentAuth == Auth.BOTH) {
 
-//        menuBar.add(login);
-//        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
-        menuBar.add(allBookIds);
-        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
-        menuBar.add(allMemberIds);
-        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
-        menuBar.add(addBook);
-        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
-        menuBar.add(addMember);
+			// Add a book menu
+			addBook = new JButton("Add Book");
+			addBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
+					null, "Add a book copy", true)));
+
+			// Add a member menu
+			addMember = new JButton("Add Member");
+			addMember.addActionListener(new AddMemberListener(new AddMemberDialog(
+					null, "Add a member", true)));
+
+			menuBar.add(addBook);
+			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+			menuBar.add(addMember);
+		}
+
+		if (SystemController.currentAuth == Auth.LIBRARIAN
+				|| SystemController.currentAuth == Auth.BOTH) {
+			// checkoutBook
+//			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+//			menuBar.add(addCheckoutBook);
+		}
 
 		add(menuBar, BorderLayout.PAGE_START);
     }
