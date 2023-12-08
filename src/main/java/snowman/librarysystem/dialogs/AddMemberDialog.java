@@ -65,6 +65,7 @@ public class AddMemberDialog extends Dialog {
         cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(event -> setVisible(false));
         confirmButton = new JButton("Confirm");
+        // TODO: add validation rule sets and  and refactor me out
         confirmButton.addActionListener(event -> {
              if (getFirstName().isEmpty() ||
                  getLastName().isEmpty() ||

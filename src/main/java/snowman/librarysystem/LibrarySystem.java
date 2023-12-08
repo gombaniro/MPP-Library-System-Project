@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,8 +67,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	}
     
     private void setPathToImage() {
-    	String currDirectory = System.getProperty("user.dir");
-    	pathToImage = currDirectory+"\\src\\main\\java\\snowman\\librarysystem\\library.jpg";
+		 pathToImage = String.valueOf(Paths.get( System.getProperty("user.dir"),
+				"src", "main", "java", "snowman", "librarysystem", "library.jpg"));
     }
     
     private void insertSplashImage() {
