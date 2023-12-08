@@ -25,11 +25,11 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JPanel mainPanel;
 	JMenuBar menuBar;
     JMenu options;
-    JMenuItem login, allBookIds, allMemberIds;
+	JButton login, allBookIds, allMemberIds;
 	JMenu books;
-	JMenuItem addBook, list;
+	JButton addBook, list;
 	JMenu members;
-	JMenuItem addMember, memberRecord;
+	JButton addMember, memberRecord;
     String pathToImage;
     private boolean isInitialized = false;
     
@@ -81,27 +81,22 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
     
     private void addMenuItems() {
-        login = createInteractiveButton("Login");
+        login = new JButton("Login");
         login.addActionListener(new LoginListener());
-        allBookIds = createInteractiveButton("All Book Ids");
+        allBookIds = new JButton("All Book Ids");
         allBookIds.addActionListener(new AllBookIdsListener());
-        allMemberIds = createInteractiveButton("All Member Ids");
+        allMemberIds = new JButton("All Member Ids");
         allMemberIds.addActionListener(new AllMemberIdsListener());
+
         // Add a book menu
-		addBook = createInteractiveButton("Add Book");
+		addBook = new JButton("Add Book");
         addBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
                 this, "Add a book copy", true)));
-//        list  = new JMenuItem("List");
-//        books.add(addBook);
-//        books.add(list);
 
         // Add a member menu
-        addMember = createInteractiveButton("Add Member");
+        addMember = new JButton("Add Member");
         addMember.addActionListener(new AddMemberListener(new AddMemberDialog(
                 this,"Add a member", true)));
-//        memberRecord = new JMenuItem("Record");
-//        members.add(addMember);
-//        members.add(memberRecord);
 
         menuBar.add(login);
         menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
@@ -113,36 +108,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
         menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
         menuBar.add(addMember);
     }
-
-	private static JMenuItem createInteractiveButton(String text) {
-		JMenuItem button = new JMenuItem(text);
-		Border defaultBorder = BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(Color.LIGHT_GRAY),
-				BorderFactory.createEmptyBorder(5, 10, 5, 10) // Set margin
-		);
-		button.setBorder(defaultBorder);
-
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				button.setBackground(new Color(200, 200, 200)); // Change background on hover
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				button.setBackground(null); // Reset background on exit
-			}
-		});
-
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				button.setBackground(new Color(150, 150, 255)); // Change background on click
-			}
-		});
-
-		return button;
-	}
 
     class LoginListener implements ActionListener {
 
