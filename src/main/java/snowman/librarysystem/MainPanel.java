@@ -27,7 +27,7 @@ public class MainPanel extends JPanel implements LibWindow {
 	JMenu books;
 	JButton addBook, list;
 	JMenu members;
-	JButton addMember, memberRecord;
+	JButton addMember, memberRecord, checkoutButton;
     private boolean isInitialized = false;
 
     public MainPanel() {}
@@ -87,9 +87,11 @@ public class MainPanel extends JPanel implements LibWindow {
 
 		if (SystemController.currentAuth == Auth.LIBRARIAN
 				|| SystemController.currentAuth == Auth.BOTH) {
-			// checkoutBook
-//			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
-//			menuBar.add(addCheckoutBook);
+
+			checkoutButton = new JButton("Checkout");
+			checkoutButton.addActionListener(new CheckoutButtonListener());
+			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+			menuBar.add(checkoutButton);
 		}
 
 		add(menuBar, BorderLayout.PAGE_START);
@@ -179,5 +181,18 @@ public class MainPanel extends JPanel implements LibWindow {
 		isInitialized =val;
 		
 	}
-    
+
+	class CheckoutButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			CheckoutWindow.INSTANCE.init();
+			CheckoutWindow.INSTANCE.pack();
+			CheckoutWindow.INSTANCE.setVisible(true);
+		}
+
+	}
+
+
 }

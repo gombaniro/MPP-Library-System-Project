@@ -1,5 +1,6 @@
 package snowman.business;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,15 @@ public class SystemController implements ControllerInterface {
 
 	@Override
 	public void checkout(String bookISBN, String memberID) throws CheckoutException {
+		DataAccess da = new DataAccessFacade();
+		HashMap<String, Book> booksMap = da.readBooksMap();
+		if(!booksMap.containsKey(bookISBN)) {
+			throw new CheckoutException("BookISBN " + bookISBN + " not found!");
+		}
+		HashMap<String, LibraryMember> membersMap = da.readMemberMap();
+		if(!membersMap.containsKey(memberID)) {
+			throw new CheckoutException("MemberID " + memberID + " not found!");
+		}
 
 	}
 

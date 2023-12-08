@@ -64,10 +64,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (SystemController.currentAuth == null) {
-				JOptionPane.showMessageDialog(LibrarySystem.INSTANCE, "Not log in");
-				return;
-			}
 			LibrarySystem.hideAllWindows();
 			CheckoutWindow.INSTANCE.init();
 			Util.centerFrameOnDesktop(CheckoutWindow.INSTANCE);

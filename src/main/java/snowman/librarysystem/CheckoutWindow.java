@@ -1,5 +1,7 @@
 package snowman.librarysystem;
 
+import snowman.business.Book;
+import snowman.business.CheckoutException;
 import snowman.business.ControllerInterface;
 import snowman.business.SystemController;
 import snowman.dataaccess.Auth;
@@ -7,6 +9,7 @@ import snowman.dataaccess.Auth;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class CheckoutWindow extends JFrame implements LibWindow {
 	public static final CheckoutWindow INSTANCE = new CheckoutWindow();
@@ -166,18 +169,12 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 
 	private void addCheckoutButtonListener(JButton butn) {
 		butn.addActionListener(evt -> {
-
-			String book = bookLabel.getText();;
-			String member = memberLabel.getText();
+			String book = bookLabel.getText();
+            String member = memberLabel.getText();
 			try {
-				ci.checkout(book, member);
-
-				JOptionPane.showMessageDialog(this, "checkout successful");
-				LibrarySystem.hideAllWindows();
-				LibrarySystem.INSTANCE.setVisible(true);
-				LibrarySystem.INSTANCE.setTitle("Sample Library Application");
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(this, "Checkout failed: " + ex.getMessage());
+				ci.checkout(book,member);
+			} catch (CheckoutException e) {
+				throw new RuntimeException(e);
 			}
 		});
 	}
