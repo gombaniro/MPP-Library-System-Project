@@ -5,13 +5,14 @@ import snowman.business.Address;
 import snowman.business.LibraryMember;
 import snowman.dataaccess.DataAccessFacade;
 import snowman.librarysystem.eventHandlers.DialogClosingListener;
+import snowman.librarysystem.rulesets.RuleException;
+import snowman.librarysystem.rulesets.RuleSet;
+import snowman.librarysystem.rulesets.RuleSetFactory;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AddMemberDialog extends Dialog {
@@ -65,41 +66,50 @@ public class AddMemberDialog extends Dialog {
         cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(event -> setVisible(false));
         confirmButton = new JButton("Confirm");
-        // TODO: add validation rule sets and  and refactor me out
         confirmButton.addActionListener(event -> {
-             if (getFirstName().isEmpty() ||
-                 getLastName().isEmpty() ||
-                 getPhone().isEmpty() ||
-                 getState().isEmpty() ||
-                 getCity().isEmpty() ||
-                 getStreet().isEmpty()) {
-                 JOptionPane.showMessageDialog(owner, "Invalid data");
+            try {
+                RuleSet rules = RuleSetFactory.getRuleSet(AddMemberDialog.this);
+                rules.applyRules(AddMemberDialog.this);
+            } catch (RuleException e) {
+                JOptionPane.showMessageDialog(AddMemberDialog.this, e.getMessage());
+                return;
+            }
 
-             } else {
-                 DataAccessFacade accessFacade = new DataAccessFacade();
-                 HashMap<String, LibraryMember> keyMembers = accessFacade.readMemberMap();
 
-                 long largestMemberId = 0;
-                 for(Map.Entry<String, LibraryMember> entry: keyMembers.entrySet()) {
-                     System.out.println(entry.getValue());
-                     LibraryMember member = entry.getValue();
-                       long id =  Long.parseLong(member.getMemberId());
-                       if (id > largestMemberId) {
-                           largestMemberId = id;
-                       }
-                 }
-                 Address address = new Address(getStreet(), getCity(), getState(), getZip());
-                 LibraryMember newMember = new LibraryMember(
-                      String.valueOf(++largestMemberId),
-                         getFirstName(),
-                         getLastName(),
-                         getPhone(),
-                         address
-                 );
-                 accessFacade.saveNewMember(newMember);
-                 JOptionPane.showMessageDialog(owner, String.format("Your Member ID is: %s", newMember.getMemberId()));
+            DataAccessFacade accessFacade = new DataAccessFacade();
+            HashMap<String, LibraryMember> keyMembers = accessFacade.readMemberMap();
 
-             }
+            long largestMemberId = 0;
+            for (Map.Entry<String, LibraryMember> entry : keyMembers.entrySet()) {
+                LibraryMember member = entry.getValue();
+                long id = Long.parseLong(member.getMemberId());
+                if (id > largestMemberId) {
+                    largestMemberId = id;
+                }
+            }
+
+
+            Address address = new Address(getStreet(), getCity(), getState(), getZip());
+            LibraryMember newMember = new LibraryMember(
+                    String.valueOf(++largestMemberId),
+                    getFirstName(),
+                    getLastName(),
+                    getPhone(),
+                    address
+            );
+
+            for (Map.Entry<String, LibraryMember> entry : keyMembers.entrySet()) {
+                LibraryMember member = entry.getValue();
+                if (member.equals(newMember)) {
+                    JOptionPane.showMessageDialog(owner, String.format("Your Member exists with ID: %s", member.getMemberId()));
+                    return;
+                }
+            }
+
+
+            accessFacade.saveNewMember(newMember);
+            JOptionPane.showMessageDialog(owner, String.format("Your Member ID is: %s", newMember.getMemberId()));
+
         });
         actionPanel.add(cancelButton);
         actionPanel.add(confirmButton);
@@ -112,9 +122,11 @@ public class AddMemberDialog extends Dialog {
     public String getFirstName() {
         return firstNameInput.getText();
     }
+
     public String getLastName() {
         return lastNameInput.getText();
     }
+
     public String getPhone() {
         return phoneInput.getText();
     }
@@ -134,8 +146,6 @@ public class AddMemberDialog extends Dialog {
     public String getZip() {
         return zipInput.getText();
     }
-
-
 
 
 }
