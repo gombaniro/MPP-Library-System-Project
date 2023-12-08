@@ -25,10 +25,13 @@ public class Main {
 	   }
 
 		public static void updateLoginStatus() {
-			String loginStatus = SystemController.currentAuth == null
-					? " (Not Logged in) "
-					: SystemController.currentAuth+"";
-			LibrarySystem.INSTANCE.setTitle("Sample Library Application. Logged in as: " + loginStatus);
+			String title;
+			if (SystemController.currentAuth == null) {
+				title = "Sample Library Application. Not logged in.";
+			} else {
+				title = "Sample Library Application. Logged in as: " + SystemController.currentAuth;
+			}
+			LibrarySystem.INSTANCE.setTitle(title);
 		}
 	   
 	   public static void centerFrameOnDesktop(Component f) {
