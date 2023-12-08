@@ -189,6 +189,8 @@ public class MainPanel extends JPanel implements LibWindow {
 			LibrarySystem.hideAllWindows();
 			CheckoutWindow.INSTANCE.init();
 			CheckoutWindow.INSTANCE.pack();
+			CheckoutWindow.INSTANCE.setLocationRelativeTo(null);
+			CheckoutWindow.INSTANCE.setTitle("Check out a book");
 			CheckoutWindow.INSTANCE.setVisible(true);
 		}
 

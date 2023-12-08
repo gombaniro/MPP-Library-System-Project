@@ -59,6 +59,7 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 		mainPanel.add(middleHalf, BorderLayout.CENTER);
 		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
 		getContentPane().add(mainPanel);
+		setSize(new Dimension(660,500));
 		isInitialized(true);
 		pack();
 	}
@@ -98,10 +99,10 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 		topPanel = new JPanel();
 		JPanel intPanel = new JPanel(new BorderLayout());
 		intPanel.add(Box.createRigidArea(new Dimension(0,20)), BorderLayout.NORTH);
-		JLabel loginLabel = new JLabel("Checkout");
-		Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
-		intPanel.add(loginLabel, BorderLayout.CENTER);
-		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		JLabel loginLabel = new JLabel("Checkout");
+//		Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
+//		intPanel.add(loginLabel, BorderLayout.CENTER);
+		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		topPanel.add(intPanel);
 
 	}
@@ -119,8 +120,15 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 	private void defineLowerPanel() {
 		lowerPanel = new JPanel();
 		checkoutButton = new JButton("Checkout");
+		clearButton = new JButton("clear");
 		addCheckoutButtonListener(checkoutButton);
+		addClearButtonListener(clearButton);
 		lowerPanel.add(checkoutButton);
+		lowerPanel.add(clearButton);
+	}
+
+	private void addClearButtonListener(JButton clearButton) {
+//		this.
 	}
 
 	private void defineLeftTextPanel() {

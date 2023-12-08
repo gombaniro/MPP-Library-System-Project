@@ -6,7 +6,7 @@ final public class LibraryMember extends Person implements Serializable {
 
 	private String memberId;
 
-	private CheckoutRecord checkoutRecord;
+	private CheckoutRecord checkoutRecord = new CheckoutRecord();
 	
 	public LibraryMember(String memberId, String fname, String lname, String tel,Address add) {
 		super(fname,lname, tel, add);
@@ -18,8 +18,10 @@ final public class LibraryMember extends Person implements Serializable {
 		return memberId;
 	}
 
-	
-	
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
 	@Override
 	public String toString() {
 		return "Member Info: " + "ID: " + memberId + ", name: " + getFirstName() + " " + getLastName() + 
@@ -42,4 +44,8 @@ final public class LibraryMember extends Person implements Serializable {
 	}
 
 	private static final long serialVersionUID = -2226197306790714013L;
+
+	public CheckoutRecord getCheckoutRecord() {
+		return checkoutRecord;
+	}
 }

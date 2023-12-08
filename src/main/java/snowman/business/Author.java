@@ -1,9 +1,15 @@
 package snowman.business;
 
 import java.io.Serializable;
+import java.util.List;
 
 final public class Author extends Person implements Serializable {
 	private String bio;
+
+	private String credentials;
+
+	private List<Book> bookList;
+
 	public String getBio() {
 		return bio;
 	}

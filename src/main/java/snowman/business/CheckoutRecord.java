@@ -1,6 +1,7 @@
 package snowman.business;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,9 +9,13 @@ import java.util.List;
  */
 final public class CheckoutRecord implements Serializable {
 
+	private List<CheckoutRecordEntry> recordEntryList =  new ArrayList<>();
 
+	public List<CheckoutRecordEntry> getRecordEntryList(){
+		return recordEntryList;
+	}
 
-	private List<CheckoutRecordEntry> recordEntryList;
-
-	
+	public void addRecordEntry(CheckoutRecordEntry recordEntry){
+		recordEntryList.add(recordEntry);
+	}
 }
