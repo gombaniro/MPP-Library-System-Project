@@ -102,6 +102,7 @@ public class AddMemberDialog extends Dialog {
                 LibraryMember member = entry.getValue();
                 if (member.equals(newMember)) {
                     JOptionPane.showMessageDialog(owner, String.format("Your Member exists with ID: %s", member.getMemberId()));
+                    this.setVisible(false);
                     return;
                 }
             }
@@ -109,6 +110,8 @@ public class AddMemberDialog extends Dialog {
 
             accessFacade.saveNewMember(newMember);
             JOptionPane.showMessageDialog(owner, String.format("Your Member ID is: %s", newMember.getMemberId()));
+            clearInputs();
+            this.setVisible(false);
 
         });
         actionPanel.add(cancelButton);
@@ -117,6 +120,16 @@ public class AddMemberDialog extends Dialog {
         addWindowListener(new DialogClosingListener(this));
         add(actionPanel, BorderLayout.SOUTH);
         setLocationRelativeTo(owner);
+    }
+
+    private void clearInputs() {
+        firstNameInput.setText("");
+        lastNameInput.setText("");
+        phoneInput.setText("");
+        stateInput.setText("");
+        cityInput.setText("");
+        streetInput.setText("");
+        zipInput.setText("");
     }
 
     public String getFirstName() {
