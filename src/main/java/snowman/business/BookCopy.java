@@ -15,7 +15,7 @@ final public class BookCopy implements Serializable {
 	private int copyNum;
 	private boolean isAvailable;
 //	BookCopy(Book book, int copyNum, boolean isAvailable) {
-	BookCopy(String bookISBN,int copyNum, boolean isAvailable) {
+	public BookCopy(String bookISBN,int copyNum, boolean isAvailable) {
 //		this.book = book;
 		this.bookISBN = bookISBN;
 		this.copyNum = copyNum;
@@ -23,7 +23,7 @@ final public class BookCopy implements Serializable {
 	}
 	
 //	BookCopy(Book book, int copyNum) {
-	BookCopy(String bookISBN, int copyNum) {
+public BookCopy(String bookISBN, int copyNum) {
 //		this.book = book;
 		this.bookISBN = bookISBN;
 		this.copyNum = copyNum;

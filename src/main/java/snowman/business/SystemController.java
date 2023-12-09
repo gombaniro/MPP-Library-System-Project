@@ -38,12 +38,20 @@ public class SystemController implements ControllerInterface {
 		HashMap<String, Book> booksMap = da.readBooksMap();
 		HashMap<String, LibraryMember> membersMap = da.readMemberMap();
 		BookCopy copy =  this.checkoutCheck(bookISBN,memberID,booksMap,membersMap);
+		if (copy == null) {
+			return;
+		}
+
 		int maxLength = booksMap.get(bookISBN).getMaxCheckoutLength();
 		//create a record
 		CheckoutRecordEntry entry = new CheckoutRecordEntry(LocalDate.now(),LocalDate.now().plusDays(maxLength),copy);
 		//add record
 		Book book = booksMap.get(bookISBN);
 		LibraryMember member = membersMap.get(memberID);
+		if (member == null) {
+			return;
+		}
+
 		CheckoutRecord record = member.getCheckoutRecord();
 		if(record==null){
 			record = new CheckoutRecord();

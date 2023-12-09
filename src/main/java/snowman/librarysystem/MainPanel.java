@@ -5,6 +5,7 @@ import snowman.business.SystemController;
 import snowman.dataaccess.Auth;
 import snowman.librarysystem.dialogs.AddBookCopyDialog;
 import snowman.librarysystem.dialogs.AddMemberDialog;
+import snowman.librarysystem.dialogs.UserRecordDialog;
 import snowman.librarysystem.eventHandlers.AddCopyBookListener;
 import snowman.librarysystem.eventHandlers.AddMemberListener;
 
@@ -65,6 +66,13 @@ public class MainPanel extends JPanel implements LibWindow {
 //		menuBar.add(allBookIds);
 //		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 //		menuBar.add(allMemberIds);
+
+		JButton showUserRecords = new JButton("Show User Records");
+		showUserRecords.addActionListener(new UserRecordListener(
+				new UserRecordDialog(null, "Show User Records", true)
+		));
+		menuBar.add(showUserRecords);
+
 		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 
 		if (SystemController.currentAuth == Auth.ADMIN
@@ -196,5 +204,17 @@ public class MainPanel extends JPanel implements LibWindow {
 
 	}
 
+	class UserRecordListener implements ActionListener {
+		Dialog d;
 
+		public UserRecordListener(Dialog d) {
+			this.d = d;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			d.setVisible(true);
+		}
+
+	}
 }
