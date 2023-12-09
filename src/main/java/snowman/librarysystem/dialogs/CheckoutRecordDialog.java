@@ -65,7 +65,7 @@ public class CheckoutRecordDialog extends Dialog {
 //                    searchResult = item.getValue();
 //                }
 //            }
-            List<CheckoutRecordEntry> searchResult = member.getCheckoutRecord().getRecordEntryList();
+            searchResult = (ArrayList<CheckoutRecordEntry>)member.getCheckoutRecord().getRecordEntryList();
             if(searchResult == null){
                 JOptionPane.showMessageDialog(owner, "Current member has no checkout record");
                 return;
