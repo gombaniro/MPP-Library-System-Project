@@ -1,19 +1,23 @@
 package snowman.business;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 final public class LibraryMember extends Person implements Serializable {
 
 	private String memberId;
 
-	private static CheckoutRecord checkoutRecord = new CheckoutRecord();
-	
-	public LibraryMember(String memberId, String fname, String lname, String tel,Address add) {
+	private CheckoutRecord checkoutRecord;
+
+
+	public LibraryMember(String memberId, String fname, String lname, String tel,Address add,CheckoutRecord checkoutRecord) {
 		super(fname,lname, tel, add);
-		this.memberId = memberId;		
+		this.memberId = memberId;
+		ArrayList<CheckoutRecordEntry> arrayList = new ArrayList<>();
+		this.checkoutRecord = checkoutRecord;
 	}
 
-	
+
 	
 	public String getMemberId() {
 		return memberId;
@@ -48,7 +52,7 @@ final public class LibraryMember extends Person implements Serializable {
 
 	public CheckoutRecord getCheckoutRecord() {
 		if(this.checkoutRecord == null){
-		   	new CheckoutRecord();
+		   	new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
 		}
 		return checkoutRecord;
 	}

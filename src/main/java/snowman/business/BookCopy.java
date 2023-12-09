@@ -78,4 +78,24 @@ public BookCopy(String bookISBN, int copyNum) {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public String getBookISBN() {
+		return bookISBN;
+	}
+
+	public void setBookISBN(String bookISBN) {
+		this.bookISBN = bookISBN;
+	}
+
+	public void setCopyNum(int copyNum) {
+		this.copyNum = copyNum;
+	}
+
+	public void setAvailable(boolean available) {
+		isAvailable = available;
+	}
+
+	public boolean getAvailable() {
+		return isAvailable;
+	}
 }

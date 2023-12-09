@@ -2,6 +2,8 @@ package snowman.librarysystem.dialogs;
 
 
 import snowman.business.Address;
+import snowman.business.CheckoutRecord;
+import snowman.business.CheckoutRecordEntry;
 import snowman.business.LibraryMember;
 import snowman.dataaccess.DataAccessFacade;
 import snowman.librarysystem.eventHandlers.DialogClosingListener;
@@ -12,6 +14,7 @@ import snowman.librarysystem.rulesets.RuleSetFactory;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,12 +93,14 @@ public class AddMemberDialog extends Dialog {
 
 
             Address address = new Address(getStreet(), getCity(), getState(), getZip());
+            CheckoutRecord checkoutRecord = new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
             LibraryMember newMember = new LibraryMember(
                     String.valueOf(++largestMemberId),
                     getFirstName(),
                     getLastName(),
                     getPhone(),
-                    address
+                    address,
+                    checkoutRecord
             );
 
             for (Map.Entry<String, LibraryMember> entry : keyMembers.entrySet()) {

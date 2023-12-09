@@ -5,9 +5,10 @@ import snowman.business.SystemController;
 import snowman.dataaccess.Auth;
 import snowman.librarysystem.dialogs.AddBookCopyDialog;
 import snowman.librarysystem.dialogs.AddMemberDialog;
-import snowman.librarysystem.dialogs.UserRecordDialog;
-import snowman.librarysystem.eventHandlers.AddCopyBookListener;
+import snowman.librarysystem.dialogs.CheckoutRecordDialog;
+import snowman.librarysystem.dialogs.UserRecordDialog;import snowman.librarysystem.eventHandlers.AddCopyBookListener;
 import snowman.librarysystem.eventHandlers.AddMemberListener;
+import snowman.librarysystem.eventHandlers.CheckoutRecordListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +29,7 @@ public class MainPanel extends JPanel implements LibWindow {
 	JMenu books;
 	JButton addBook, list;
 	JMenu members;
-	JButton addMember, memberRecord, checkoutButton;
+	JButton addMember, memberRecord, checkoutButton,checkoutRecordButton;
     private boolean isInitialized = false;
 
     public MainPanel() {}
@@ -100,6 +101,12 @@ public class MainPanel extends JPanel implements LibWindow {
 			checkoutButton.addActionListener(new CheckoutButtonListener());
 			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 			menuBar.add(checkoutButton);
+			checkoutRecordButton = new JButton("Checkout Record");
+			addBook.addActionListener(new CheckoutRecordListener(new CheckoutRecordDialog(
+					null, "Show a librarian member's checkout record", true)));
+//			checkoutRecordButton.addActionListener(new CheckoutRecordButtonListener());
+			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+			menuBar.add(checkoutRecordButton);
 		}
 
 		add(menuBar, BorderLayout.PAGE_START);
@@ -204,6 +211,10 @@ public class MainPanel extends JPanel implements LibWindow {
 
 	}
 
+	//
+
+	}
+
 	class UserRecordListener implements ActionListener {
 		Dialog d;
 
@@ -217,4 +228,3 @@ public class MainPanel extends JPanel implements LibWindow {
 		}
 
 	}
-}

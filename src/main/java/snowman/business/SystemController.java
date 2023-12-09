@@ -1,6 +1,5 @@
 package snowman.business;
 
-import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAmount;
@@ -38,10 +37,9 @@ public class SystemController implements ControllerInterface {
 		HashMap<String, Book> booksMap = da.readBooksMap();
 		HashMap<String, LibraryMember> membersMap = da.readMemberMap();
 		BookCopy copy =  this.checkoutCheck(bookISBN,memberID,booksMap,membersMap);
-		if (copy == null) {
+		if(copy == null){
 			return;
 		}
-
 		int maxLength = booksMap.get(bookISBN).getMaxCheckoutLength();
 		//create a record
 		CheckoutRecordEntry entry = new CheckoutRecordEntry(LocalDate.now(),LocalDate.now().plusDays(maxLength),copy);
@@ -54,14 +52,14 @@ public class SystemController implements ControllerInterface {
 
 		CheckoutRecord record = member.getCheckoutRecord();
 		if(record==null){
-			record = new CheckoutRecord();
+			record = new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
 		}
 		record.getRecordEntryList().add(entry);
 		copy.checkout();
 		book.updateCopies(copy);
-		booksMap.put(bookISBN, book);
-		//print current copy
-//		System.out.println(copy.toString());
+		booksMap.put(bookISBN,book);
+		membersMap.put(memberID,member);
+		((DataAccessFacade) da).saveCheckoutRecord(booksMap, membersMap);
 		JOptionPane.showMessageDialog(null, "ISBN: " + bookISBN + " copyNum: + " + copy.getCopyNum() + "  is successfully checked out");
 	}
 
@@ -101,6 +99,8 @@ public class SystemController implements ControllerInterface {
 			c = it.next();
 			if(c.isAvailable()){
 				break;
+			}else{
+				c = null;
 			}
 		}
 		if(c == null){

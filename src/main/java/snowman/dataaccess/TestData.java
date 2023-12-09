@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import snowman.business.Address;
-import snowman.business.Author;
-import snowman.business.Book;
-import snowman.business.LibraryMember;
+import snowman.business.*;
 
 /**
  * This class loads data into the data repository and also
@@ -48,15 +45,19 @@ public class TestData {
 	
 	//create library members
 	public void libraryMemberData() {
-		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "641-223-2211", addresses.get(4));
+		CheckoutRecord record = new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
+		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "641-223-2211", addresses.get(4),record);
 		members.add(libraryMember);
-		libraryMember = new LibraryMember("1002", "Drew", "Stevens", "702-998-2414", addresses.get(5));
+		CheckoutRecord record2 = new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
+		libraryMember = new LibraryMember("1002", "Drew", "Stevens", "702-998-2414", addresses.get(5),record2);
 		members.add(libraryMember);
-		
-		libraryMember = new LibraryMember("1003", "Sarah", "Eagleton", "451-234-8811", addresses.get(6));
+
+		CheckoutRecord record3 = new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
+		libraryMember = new LibraryMember("1003", "Sarah", "Eagleton", "451-234-8811", addresses.get(6),record3);
 		members.add(libraryMember);
-		
-		libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn", "641-472-2871", addresses.get(7));
+
+		CheckoutRecord record4 = new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
+		libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn", "641-472-2871", addresses.get(7),record4);
 		members.add(libraryMember);
 		
 		DataAccessFacade.loadMemberMap(members);	
@@ -92,10 +93,10 @@ public class TestData {
 	@SuppressWarnings("serial")
 	List<Book> allBooks = new ArrayList<Book>() {
 		{
-			add(new Book("23-11451", "The Big Fish", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
-			add(new Book("28-12331", "Antartica", 7, Arrays.asList(allAuthors.get(2))));
-			add(new Book("99-22223", "Thinking Java", 21, Arrays.asList(allAuthors.get(3))));
-			add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(allAuthors.get(4))));		
+			add(new Book("23-11451", "The Big Fish", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1)),new ArrayList<BookCopy>()));
+			add(new Book("28-12331", "Antartica", 7, Arrays.asList(allAuthors.get(2)),new ArrayList<BookCopy>()));
+			add(new Book("99-22223", "Thinking Java", 21, Arrays.asList(allAuthors.get(3)),new ArrayList<BookCopy>()));
+			add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(allAuthors.get(4)),new ArrayList<BookCopy>()));
 		}
 	};
 	
