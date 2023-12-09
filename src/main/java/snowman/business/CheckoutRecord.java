@@ -9,7 +9,11 @@ import java.util.List;
  */
 final public class CheckoutRecord implements Serializable {
 
-	private List<CheckoutRecordEntry> recordEntryList =  new ArrayList<>();
+	private static List<CheckoutRecordEntry> recordEntryList =  new ArrayList<>();
+
+	public CheckoutRecord() {
+		recordEntryList =  new ArrayList<>();
+	}
 
 	public List<CheckoutRecordEntry> getRecordEntryList(){
 		return recordEntryList;
@@ -18,4 +22,7 @@ final public class CheckoutRecord implements Serializable {
 	public void addRecordEntry(CheckoutRecordEntry recordEntry){
 		recordEntryList.add(recordEntry);
 	}
+
+
+
 }

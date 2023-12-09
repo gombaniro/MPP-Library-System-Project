@@ -8,23 +8,28 @@ import java.io.Serializable;
 final public class BookCopy implements Serializable {
 	
 	private static final long serialVersionUID = -63976228084869815L;
-	private Book book;
+//	private Book book;
+	private String bookISBN;
+	private String title;
+
 	private int copyNum;
-	private boolean isAvailable = true;
-	BookCopy(Book book, int copyNum, boolean isAvailable) {
-		this.book = book;
+	private boolean isAvailable;
+//	BookCopy(Book book, int copyNum, boolean isAvailable) {
+	BookCopy(String bookISBN,int copyNum, boolean isAvailable) {
+//		this.book = book;
+		this.bookISBN = bookISBN;
 		this.copyNum = copyNum;
 		this.isAvailable = isAvailable;
 	}
 	
-	BookCopy(Book book, int copyNum) {
-		this.book = book;
+//	BookCopy(Book book, int copyNum) {
+	BookCopy(String bookISBN, int copyNum) {
+//		this.book = book;
+		this.bookISBN = bookISBN;
 		this.copyNum = copyNum;
 	}
 	
-	public void checkout(){
-		isAvailable = false;
-	}
+	
 	public boolean isAvailable() {
 		return isAvailable;
 	}
@@ -33,9 +38,9 @@ final public class BookCopy implements Serializable {
 		return copyNum;
 	}
 	
-	public Book getBook() {
-		return book;
-	}
+//	public Book getBook() {
+//		return book;
+//	}
 	
 	public void changeAvailability() {
 		isAvailable = !isAvailable;
@@ -46,12 +51,31 @@ final public class BookCopy implements Serializable {
 		if(ob == null) return false;
 		if(!(ob instanceof BookCopy)) return false;
 		BookCopy copy = (BookCopy)ob;
-		return copy.book.getIsbn().equals(book.getIsbn()) && copy.copyNum == copyNum;
+		return copy.getIsbn().equals(this.getIsbn()) && copy.copyNum == copyNum;
+	}
+
+	public String getIsbn() {
+		return this.bookISBN;
 	}
 
 	@Override
 	public String toString() {
 		return String.format("copy# %d , available: %b", getCopyNum(), isAvailable());
 	}
-	
+
+	public void checkout() {
+		this.isAvailable = false;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setISBN(String isbn) {
+		this.bookISBN = isbn;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }

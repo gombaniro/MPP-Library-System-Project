@@ -58,8 +58,8 @@ public class BookCopyModel extends AbstractTableModel {
         }
         BookCopy copy = copies[rowIndex];
         switch (columnIndex) {
-            case 0: return copy.getBook().getIsbn();
-            case 1: return copy.getBook().getTitle();
+            case 0: return copy.getIsbn();
+            case 1: return copy.getTitle();
             case 2: return copy.isAvailable();
             case 3: return copy.getCopyNum();
             default: return null;

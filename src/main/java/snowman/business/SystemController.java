@@ -5,9 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import snowman.dataaccess.Auth;
 import snowman.dataaccess.DataAccess;
@@ -40,18 +38,23 @@ public class SystemController implements ControllerInterface {
 		HashMap<String, Book> booksMap = da.readBooksMap();
 		HashMap<String, LibraryMember> membersMap = da.readMemberMap();
 		BookCopy copy =  this.checkoutCheck(bookISBN,memberID,booksMap,membersMap);
-		if(copy == null){
-			return;
-		}
+		int maxLength = booksMap.get(bookISBN).getMaxCheckoutLength();
 		//create a record
-		CheckoutRecordEntry entry = new CheckoutRecordEntry(LocalDate.now(),LocalDate.now().plusDays(7L),copy);
+		CheckoutRecordEntry entry = new CheckoutRecordEntry(LocalDate.now(),LocalDate.now().plusDays(maxLength),copy);
 		//add record
 		Book book = booksMap.get(bookISBN);
 		LibraryMember member = membersMap.get(memberID);
-		member.getCheckoutRecord().addRecordEntry(entry);
+		CheckoutRecord record = member.getCheckoutRecord();
+		if(record==null){
+			record = new CheckoutRecord();
+		}
+		record.getRecordEntryList().add(entry);
 		copy.checkout();
+		book.updateCopies(copy);
+		booksMap.put(bookISBN, book);
 		//print current copy
-		System.out.println(copy.toString());
+//		System.out.println(copy.toString());
+		JOptionPane.showMessageDialog(null, "ISBN: " + bookISBN + " copyNum: + " + copy.getCopyNum() + "  is successfully checked out");
 	}
 
 	@Override
@@ -84,17 +87,20 @@ public class SystemController implements ControllerInterface {
 		}
 		//check if book copy available
 		Book book = booksMap.get(bookISBN);
-		BookCopy copy = null;
-		for(BookCopy c : book.getCopies()){
+		Iterator<BookCopy> it = Arrays.stream(book.getCopies()).iterator();
+		BookCopy c = null;
+		while(it.hasNext()){
+			c = it.next();
 			if(c.isAvailable()){
-				copy = c;
 				break;
 			}
 		}
-		if(copy == null){
+		if(c == null){
 			JOptionPane.showMessageDialog(null, "Current book has no available copy !");
 			return null;
 		}
-		return copy;
+		c.setISBN(book.getIsbn());
+		c.setTitle(book.getTitle());
+		return c;
 	}
 }

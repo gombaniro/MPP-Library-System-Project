@@ -34,8 +34,8 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 	private JLabel memberLabel = new JLabel("memberID: ");
 
 
-	private JTextField book;
-	private JTextField member;
+	private JTextField bookField;
+	private JTextField memberField;
 
   	private JButton checkoutButton;
 
@@ -49,11 +49,13 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 	
 	public void init() {
 		mainPanel = new JPanel();
+		mainPanel.setSize(1000,600);
 		defineUpperHalf();
 		defineMiddleHalf();
 		defineLowerHalf();
 		BorderLayout bl = new BorderLayout();
 		bl.setVgap(30);
+		bl.setHgap(10);
 		mainPanel.setLayout(bl);
 		mainPanel.add(upperHalf, BorderLayout.NORTH);
 		mainPanel.add(middleHalf, BorderLayout.CENTER);
@@ -127,10 +129,6 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 		lowerPanel.add(clearButton);
 	}
 
-	private void addClearButtonListener(JButton clearButton) {
-//		this.
-	}
-
 	private void defineLeftTextPanel() {
 
 		JPanel topText = new JPanel();
@@ -138,10 +136,10 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
 		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
 
-		book = new JTextField(10);
+		bookField = new JTextField(20);
 		bookLabel = new JLabel("BookISBN");
 		bookLabel.setFont(Util.makeSmallFont(bookLabel.getFont()));
-		topText.add(book);
+		topText.add(bookField);
 		bottomText.add(bookLabel);
 
 		leftTextPanel = new JPanel();
@@ -156,10 +154,10 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
 		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
 
-		member = new JPasswordField(10);
+		memberField = new JTextField(20);
 		memberLabel = new JLabel("MemberID");
 		memberLabel.setFont(Util.makeSmallFont(memberLabel.getFont()));
-		topText.add(member);
+		topText.add(memberField);
 		bottomText.add(memberLabel);
 
 		rightTextPanel = new JPanel();
@@ -177,8 +175,12 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 
 	private void addCheckoutButtonListener(JButton butn) {
 		butn.addActionListener(evt -> {
-			String book = bookLabel.getText();
-            String member = memberLabel.getText();
+			String book = bookField.getText();
+            String member = memberField.getText();
+			if(book.isEmpty() || member.isEmpty()){
+				JOptionPane.showMessageDialog(this, "all input fields must be non-empty");
+				return;
+			}
 			try {
 				ci.checkout(book,member);
 			} catch (CheckoutException e) {
@@ -187,6 +189,13 @@ public class CheckoutWindow extends JFrame implements LibWindow {
 		});
 	}
 
+	private void addClearButtonListener(JButton butn) {
+		butn.addActionListener(evt -> {
+//			System.out.println("clear button is clicked");
+			this.bookField.setText("");
+			this.memberField.setText("");
+		});
+	}
 
 	@Override
 	public boolean isInitialized() {

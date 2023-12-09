@@ -165,7 +165,7 @@ public class LoginPanel extends JPanel implements LibWindow {
 			try {
 				ci.login(idValue, passwordValue);
 
-				JOptionPane.showMessageDialog(this, "Login successful");
+//				JOptionPane.showMessageDialog(this, "Login successful");
 
 				Main.updateLoginStatus();
 				MainPanel.INSTANCE.init();
