@@ -70,8 +70,7 @@ public class CheckoutRecordDialog extends Dialog {
                 JOptionPane.showMessageDialog(owner, "Current member has no checkout record");
                 return;
             }
-
-//            buildUI(owner); // find a better solution instead of rebuild the entire UI
+            buildUI(owner); // find a better solution instead of rebuild the entire UI
         });
         searchPanel.add(new JLabel("Librarian Member ID: "));
         searchPanel.add(searchInput);
