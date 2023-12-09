@@ -26,6 +26,7 @@ public class CheckoutRecordDialog extends Dialog {
     JPanel tableContainer;
     JTable table;
 
+    HashMap<String, LibraryMember> membersMap;
 
     public CheckoutRecordDialog(JFrame owner, String title, boolean modal) {
         super(owner, title, modal);
@@ -46,7 +47,7 @@ public class CheckoutRecordDialog extends Dialog {
                 return;
             }
             DataAccessFacade accessFacade = new DataAccessFacade();
-            HashMap<String, LibraryMember> membersMap = accessFacade.readMemberMap();
+            membersMap = accessFacade.readMemberMap();
             String memberID = searchInput.getText();
             LibraryMember member = membersMap.get(memberID);
             if(member == null){
