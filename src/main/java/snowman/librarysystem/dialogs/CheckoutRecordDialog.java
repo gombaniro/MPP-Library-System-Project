@@ -41,7 +41,7 @@ public class CheckoutRecordDialog extends Dialog {
     private void buildUI(JFrame owner) {
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new GridLayout(1, 3));
-        searchInput = new JTextField("");
+        searchInput = new JTextField(20);
         if (searchResult != null) {
             searchInput.setText(member.getMemberId());
         } else {
@@ -54,6 +54,7 @@ public class CheckoutRecordDialog extends Dialog {
             DataAccessFacade accessFacade = new DataAccessFacade();
             HashMap<String, LibraryMember> membersMap = accessFacade.readMemberMap();
             LibraryMember member = membersMap.get(searchInput.getText());
+            System.out.println(searchInput.getText());
             if(member == null){
                 JOptionPane.showMessageDialog(owner, "There is no such member");
                 return;

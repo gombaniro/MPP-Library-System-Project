@@ -102,7 +102,7 @@ public class MainPanel extends JPanel implements LibWindow {
 			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 			menuBar.add(checkoutButton);
 			checkoutRecordButton = new JButton("Checkout Record");
-			addBook.addActionListener(new CheckoutRecordListener(new CheckoutRecordDialog(
+			checkoutRecordButton.addActionListener(new CheckoutRecordListener(new CheckoutRecordDialog(
 					null, "Show a librarian member's checkout record", true)));
 //			checkoutRecordButton.addActionListener(new CheckoutRecordButtonListener());
 			menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
