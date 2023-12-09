@@ -12,22 +12,12 @@ import java.util.List;
 
 public class CheckoutRecordModel extends AbstractTableModel {
 
-//    protected Book book;
-//    protected BookCopy[] copies;
-
-//    protected CheckoutRecordEntry entry;
     protected List<CheckoutRecordEntry> recordEntries;
 
-//    protected String[] columnNames = new String[] {
-//            "ISBN", "Title", "Available", "Copy#"
-//    };
- protected String[] columnNames = new String[] {
+   protected String[] columnNames = new String[] {
          "checkoutDate", "dueDate", "bookISBN","title","copyNum","isAvailable"
     };
 
-//    protected Class[] columnClasses = new Class[]{
-//            String.class, String.class, Boolean.class, Integer.class
-//    };
 
     protected Class[] columnClasses = new Class[]{
             LocalDate.class, LocalDate.class, String.class,String.class,int.class,boolean.class

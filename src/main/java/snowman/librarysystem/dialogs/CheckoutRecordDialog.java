@@ -20,12 +20,8 @@ import java.util.Map;
 public class CheckoutRecordDialog extends Dialog {
     JTextField searchInput;
     JButton searchButton;
-//    JButton copyButton;
-//    Book searchResult;
     ArrayList<CheckoutRecordEntry> searchResult;
-//    CheckoutRecord searchResult;
     LibraryMember member;
-//    Book searchResult;
     JPanel tablePanel;
     JPanel tableContainer;
     JTable table;
@@ -41,20 +37,18 @@ public class CheckoutRecordDialog extends Dialog {
     private void buildUI(JFrame owner) {
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new GridLayout(1, 3));
-        searchInput = new JTextField(20);
-        if (searchResult != null) {
-            searchInput.setText(member.getMemberId());
-        } else {
-            searchInput.setText("");
-        }
-
+        searchInput = new JTextField(10);
         searchButton = new JButton("search");
 
         searchButton.addActionListener(event -> {
+            if(searchInput == null){
+                JOptionPane.showMessageDialog(owner, "input should not be empty");
+                return;
+            }
             DataAccessFacade accessFacade = new DataAccessFacade();
             HashMap<String, LibraryMember> membersMap = accessFacade.readMemberMap();
-            LibraryMember member = membersMap.get(searchInput.getText());
-            System.out.println(searchInput.getText());
+            String memberID = searchInput.getText();
+            LibraryMember member = membersMap.get(memberID);
             if(member == null){
                 JOptionPane.showMessageDialog(owner, "There is no such member");
                 return;
@@ -77,13 +71,13 @@ public class CheckoutRecordDialog extends Dialog {
                 return;
             }
 
-            buildUI(owner); // find a better solution instead of rebuild the entire UI
+//            buildUI(owner); // find a better solution instead of rebuild the entire UI
         });
         searchPanel.add(new JLabel("Librarian Member ID: "));
         searchPanel.add(searchInput);
         searchPanel.add(searchButton);
         Border lineBorder = BorderFactory.createEtchedBorder();
-        Border titled = BorderFactory.createTitledBorder(lineBorder, "Find CheckoutRecord");
+        Border titled = BorderFactory.createTitledBorder(lineBorder, "");
         searchPanel.setBorder(titled);
         add(searchPanel, BorderLayout.NORTH);
 
