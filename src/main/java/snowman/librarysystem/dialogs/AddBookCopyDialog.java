@@ -32,10 +32,15 @@ public class AddBookCopyDialog extends Dialog {
     }
 
     private void buildUI(JFrame owner) {
-
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new GridLayout(1, 3));
         searchInput = new JTextField("");
+        if (searchResult != null) {
+            searchInput.setText(searchResult.getIsbn());
+        } else {
+            searchInput.setText("");
+        }
+
         searchButton = new JButton("search");
 
         searchButton.addActionListener(event -> {
@@ -86,6 +91,12 @@ public class AddBookCopyDialog extends Dialog {
             searchResult.addCopy();
             DataAccessFacade accessFacade = new DataAccessFacade();
             HashMap<String, Book> books = accessFacade.readBooksMap();
+            for(Map.Entry<String, Book>e : books.entrySet()) {
+                if (e.getValue().getIsbn().equals(searchResult.getIsbn())) {
+                    books.put(e.getKey(), searchResult);
+                    break;
+                }
+            }
             accessFacade.saveNewCopy(books);
             buildUI(owner);
 
