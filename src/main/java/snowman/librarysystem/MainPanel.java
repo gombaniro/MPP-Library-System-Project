@@ -57,14 +57,14 @@ public class MainPanel extends JPanel implements LibWindow {
     }
     
     private void addMenuItems() {
-        allBookIds = new JButton("All Book Ids");
-        allBookIds.addActionListener(new AllBookIdsListener());
-        allMemberIds = new JButton("All Member Ids");
-        allMemberIds.addActionListener(new AllMemberIdsListener());
-
-		menuBar.add(allBookIds);
-		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
-		menuBar.add(allMemberIds);
+//        allBookIds = new JButton("All Book Ids");
+//        allBookIds.addActionListener(new AllBookIdsListener());
+//        allMemberIds = new JButton("All Member Ids");
+//        allMemberIds.addActionListener(new AllMemberIdsListener());
+//
+//		menuBar.add(allBookIds);
+//		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+//		menuBar.add(allMemberIds);
 		menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 
 		if (SystemController.currentAuth == Auth.ADMIN
