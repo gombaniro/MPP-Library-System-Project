@@ -211,10 +211,6 @@ public class MainPanel extends JPanel implements LibWindow {
 
 	}
 
-	//
-
-	}
-
 	class UserRecordListener implements ActionListener {
 		Dialog d;
 
@@ -228,3 +224,5 @@ public class MainPanel extends JPanel implements LibWindow {
 		}
 
 	}
+
+}
