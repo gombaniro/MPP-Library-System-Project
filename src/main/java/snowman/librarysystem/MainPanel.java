@@ -112,24 +112,6 @@ public class MainPanel extends JPanel implements LibWindow {
 		add(menuBar, BorderLayout.PAGE_START);
     }
 
-    class LoginListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-//			if (SystemController.currentAuth != null) {
-//				JOptionPane.showMessageDialog(LibrarySystem.INSTANCE, "User already logged in");
-//				return;
-//			}
-
-			// main panel
-//			LibrarySystem.hideAllWindows();
-//			changePanel(this);
-//			LoginPanel.INSTANCE.init();
-//			Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
-//			LoginPanel.INSTANCE.setVisible(true);
-		}
-    	
-    }
     class AllBookIdsListener implements ActionListener {
 
 		@Override
