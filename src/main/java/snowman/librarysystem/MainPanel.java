@@ -21,14 +21,10 @@ import java.util.List;
 public class MainPanel extends JPanel implements LibWindow {
     ControllerInterface ci = new SystemController();
     public final static MainPanel INSTANCE = new MainPanel();
-    JPanel mainPanel;
     JMenuBar menuBar;
-    JMenu options;
-    JButton login, allBookIds, allMemberIds;
-    JMenu books;
-    JButton addBook, list;
-    JMenu members;
-    JButton addMember, memberRecord, checkoutButton, checkoutRecordButton;
+    JButton allBookIds, allMemberIds;
+    JButton addBook;
+    JButton addMember, checkoutButton, checkoutRecordButton;
     private boolean isInitialized = false;
 
     public MainPanel() {
@@ -39,8 +35,6 @@ public class MainPanel extends JPanel implements LibWindow {
 
         createMenus();
         insertSplashImage();
-
-        //pack();
 
         setSize(660, 500);
         isInitialized = true;
@@ -56,7 +50,6 @@ public class MainPanel extends JPanel implements LibWindow {
     private void createMenus() {
         menuBar = new JMenuBar();
         addMenuItems();
-//		setJMenuBar(menuBar);
     }
 
     private void addMenuItems() {
