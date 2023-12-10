@@ -93,14 +93,12 @@ public class AddMemberDialog extends Dialog {
 
 
             Address address = new Address(getStreet(), getCity(), getState(), getZip());
-            CheckoutRecord checkoutRecord = new CheckoutRecord(new ArrayList<CheckoutRecordEntry>());
             LibraryMember newMember = new LibraryMember(
                     String.valueOf(++largestMemberId),
                     getFirstName(),
                     getLastName(),
                     getPhone(),
-                    address,
-                    checkoutRecord
+                    address
             );
 
             for (Map.Entry<String, LibraryMember> entry : keyMembers.entrySet()) {

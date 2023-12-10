@@ -12,202 +12,209 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class CheckoutWindow extends JFrame implements LibWindow {
-	public static final CheckoutWindow INSTANCE = new CheckoutWindow();
+    public static final CheckoutWindow INSTANCE = new CheckoutWindow();
     ControllerInterface ci = new SystemController();
-	private boolean isInitialized = false;
-	public JPanel getMainPanel() {
-		return mainPanel;
-	}
-	private JPanel mainPanel;
-	private JPanel topPanel;
-	private JPanel middlePanel;
-	private JPanel lowerPanel;
-//	private TextArea textArea;
+    private boolean isInitialized = false;
 
-	private JPanel upperHalf;
-	private JPanel middleHalf;
-	private JPanel lowerHalf;
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
 
-	private JPanel leftTextPanel;
-	private JPanel rightTextPanel;
-	private JLabel bookLabel = new JLabel("bookISBN: ");
-	private JLabel memberLabel = new JLabel("memberID: ");
+    private JPanel mainPanel;
+    private JPanel topPanel;
+    private JPanel middlePanel;
+    private JPanel lowerPanel;
+
+    private JPanel upperHalf;
+    private JPanel middleHalf;
+    private JPanel lowerHalf;
+
+    private JPanel leftTextPanel;
+    private JPanel rightTextPanel;
+    private JLabel bookLabel = new JLabel("bookISBN: ");
+    private JLabel memberLabel = new JLabel("memberID: ");
 
 
-	private JTextField bookField;
-	private JTextField memberField;
+    private JTextField bookField;
+    private JTextField memberField;
 
-  	private JButton checkoutButton;
+    private JButton checkoutButton;
 
-	  private JButton clearButton;
-    private JTextField messageBar = new JTextField();
-	public void clear() {
-		messageBar.setText("");
-	}
+    private JButton clearButton;
+    private final JTextField messageBar = new JTextField();
 
-	private CheckoutWindow() {}
-	
-	public void init() {
-		mainPanel = new JPanel();
-		mainPanel.setSize(1000,600);
-		defineUpperHalf();
-		defineMiddleHalf();
-		defineLowerHalf();
-		BorderLayout bl = new BorderLayout();
-		bl.setVgap(30);
-		bl.setHgap(10);
-		mainPanel.setLayout(bl);
-		mainPanel.add(upperHalf, BorderLayout.NORTH);
-		mainPanel.add(middleHalf, BorderLayout.CENTER);
-		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
-		getContentPane().add(mainPanel);
-		setSize(new Dimension(660,500));
-		isInitialized(true);
-		pack();
-	}
+    public void clear() {
+        messageBar.setText("");
+    }
 
-	private void defineUpperHalf() {
+    private CheckoutWindow() {
+    }
 
-		upperHalf = new JPanel();
-		upperHalf.setLayout(new BorderLayout());
-		defineTopPanel();
-		defineMiddlePanel();
-		defineLowerPanel();
-		upperHalf.add(topPanel, BorderLayout.NORTH);
-		upperHalf.add(middlePanel, BorderLayout.CENTER);
-		upperHalf.add(lowerPanel, BorderLayout.SOUTH);
+    public void init() {
+        mainPanel = new JPanel();
+        mainPanel.setSize(1000, 600);
+        defineUpperHalf();
+        defineMiddleHalf();
+        defineLowerHalf();
+        BorderLayout bl = new BorderLayout();
+        bl.setVgap(30);
+        bl.setHgap(10);
+        mainPanel.setLayout(bl);
+        mainPanel.add(upperHalf, BorderLayout.NORTH);
+        mainPanel.add(middleHalf, BorderLayout.CENTER);
+        mainPanel.add(lowerHalf, BorderLayout.SOUTH);
+        getContentPane().add(mainPanel);
+        setSize(new Dimension(660, 500));
+        isInitialized(true);
+        pack();
+    }
 
-	}
-	private void defineMiddleHalf() {
-		middleHalf = new JPanel();
-		middleHalf.setLayout(new BorderLayout());
-		JSeparator s = new JSeparator();
-		s.setOrientation(SwingConstants.VERTICAL);
-		//middleHalf.add(Box.createRigidArea(new Dimension(0,50)));
-		middleHalf.add(s, BorderLayout.SOUTH);
+    private void defineUpperHalf() {
 
-	}
-	private void defineLowerHalf() {
+        upperHalf = new JPanel();
+        upperHalf.setLayout(new BorderLayout());
+        defineTopPanel();
+        defineMiddlePanel();
+        defineLowerPanel();
+        upperHalf.add(topPanel, BorderLayout.NORTH);
+        upperHalf.add(middlePanel, BorderLayout.CENTER);
+        upperHalf.add(lowerPanel, BorderLayout.SOUTH);
 
-		lowerHalf = new JPanel();
-		lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
+    }
 
-		JButton backButton = new JButton("<= Back to Main");
-		addBackButtonListener(backButton);
-		lowerHalf.add(backButton);
+    private void defineMiddleHalf() {
+        middleHalf = new JPanel();
+        middleHalf.setLayout(new BorderLayout());
+        JSeparator s = new JSeparator();
+        s.setOrientation(SwingConstants.VERTICAL);
+        //middleHalf.add(Box.createRigidArea(new Dimension(0,50)));
+        middleHalf.add(s, BorderLayout.SOUTH);
 
-	}
-	private void defineTopPanel() {
-		topPanel = new JPanel();
-		JPanel intPanel = new JPanel(new BorderLayout());
-		intPanel.add(Box.createRigidArea(new Dimension(0,20)), BorderLayout.NORTH);
+    }
+
+    private void defineLowerHalf() {
+
+        lowerHalf = new JPanel();
+        lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        JButton backButton = new JButton("<= Back to Main");
+        addBackButtonListener(backButton);
+        lowerHalf.add(backButton);
+
+    }
+
+    private void defineTopPanel() {
+        topPanel = new JPanel();
+        JPanel intPanel = new JPanel(new BorderLayout());
+        intPanel.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
 //		JLabel loginLabel = new JLabel("Checkout");
 //		Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
 //		intPanel.add(loginLabel, BorderLayout.CENTER);
-		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		topPanel.add(intPanel);
+        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        topPanel.add(intPanel);
 
-	}
+    }
 
 
+    private void defineMiddlePanel() {
+        middlePanel = new JPanel();
+        middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        defineLeftTextPanel();
+        defineRightTextPanel();
+        middlePanel.add(leftTextPanel);
+        middlePanel.add(rightTextPanel);
+    }
 
-	private void defineMiddlePanel() {
-		middlePanel=new JPanel();
-		middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		defineLeftTextPanel();
-		defineRightTextPanel();
-		middlePanel.add(leftTextPanel);
-		middlePanel.add(rightTextPanel);
-	}
-	private void defineLowerPanel() {
-		lowerPanel = new JPanel();
-		checkoutButton = new JButton("Checkout");
-		clearButton = new JButton("clear");
-		addCheckoutButtonListener(checkoutButton);
-		addClearButtonListener(clearButton);
-		lowerPanel.add(checkoutButton);
-		lowerPanel.add(clearButton);
-	}
+    private void defineLowerPanel() {
+        lowerPanel = new JPanel();
+        checkoutButton = new JButton("Checkout");
+        clearButton = new JButton("clear");
+        addCheckoutButtonListener(checkoutButton);
+        addClearButtonListener(clearButton);
+        lowerPanel.add(checkoutButton);
+        lowerPanel.add(clearButton);
+    }
 
-	private void defineLeftTextPanel() {
+    private void defineLeftTextPanel() {
 
-		JPanel topText = new JPanel();
-		JPanel bottomText = new JPanel();
-		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+        JPanel topText = new JPanel();
+        JPanel bottomText = new JPanel();
+        topText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        bottomText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
 
-		bookField = new JTextField(20);
-		bookLabel = new JLabel("BookISBN");
-		bookLabel.setFont(Util.makeSmallFont(bookLabel.getFont()));
-		topText.add(bookField);
-		bottomText.add(bookLabel);
+        bookField = new JTextField(20);
+        bookLabel = new JLabel("BookISBN");
+        bookLabel.setFont(Util.makeSmallFont(bookLabel.getFont()));
+        topText.add(bookField);
+        bottomText.add(bookLabel);
 
-		leftTextPanel = new JPanel();
-		leftTextPanel.setLayout(new BorderLayout());
-		leftTextPanel.add(topText,BorderLayout.NORTH);
-		leftTextPanel.add(bottomText,BorderLayout.CENTER);
-	}
-	private void defineRightTextPanel() {
+        leftTextPanel = new JPanel();
+        leftTextPanel.setLayout(new BorderLayout());
+        leftTextPanel.add(topText, BorderLayout.NORTH);
+        leftTextPanel.add(bottomText, BorderLayout.CENTER);
+    }
 
-		JPanel topText = new JPanel();
-		JPanel bottomText = new JPanel();
-		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+    private void defineRightTextPanel() {
 
-		memberField = new JTextField(20);
-		memberLabel = new JLabel("MemberID");
-		memberLabel.setFont(Util.makeSmallFont(memberLabel.getFont()));
-		topText.add(memberField);
-		bottomText.add(memberLabel);
+        JPanel topText = new JPanel();
+        JPanel bottomText = new JPanel();
+        topText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        bottomText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
 
-		rightTextPanel = new JPanel();
-		rightTextPanel.setLayout(new BorderLayout());
-		rightTextPanel.add(topText,BorderLayout.NORTH);
-		rightTextPanel.add(bottomText,BorderLayout.CENTER);
-	}
+        memberField = new JTextField(20);
+        memberLabel = new JLabel("MemberID");
+        memberLabel.setFont(Util.makeSmallFont(memberLabel.getFont()));
+        topText.add(memberField);
+        bottomText.add(memberLabel);
 
-	private void addBackButtonListener(JButton butn) {
-		butn.addActionListener(evt -> {
-			LibrarySystem.hideAllWindows();
-			LibrarySystem.INSTANCE.setVisible(true);
-		});
-	}
+        rightTextPanel = new JPanel();
+        rightTextPanel.setLayout(new BorderLayout());
+        rightTextPanel.add(topText, BorderLayout.NORTH);
+        rightTextPanel.add(bottomText, BorderLayout.CENTER);
+    }
 
-	private void addCheckoutButtonListener(JButton butn) {
-		butn.addActionListener(evt -> {
-			String book = bookField.getText();
+    private void addBackButtonListener(JButton butn) {
+        butn.addActionListener(evt -> {
+            LibrarySystem.hideAllWindows();
+            LibrarySystem.INSTANCE.setVisible(true);
+        });
+    }
+
+    private void addCheckoutButtonListener(JButton butn) {
+        butn.addActionListener(evt -> {
+            String book = bookField.getText();
             String member = memberField.getText();
-			if(book.isEmpty() || member.isEmpty()){
-				JOptionPane.showMessageDialog(this, "all input fields must be non-empty");
-				return;
-			}
-			try {
-				ci.checkout(book,member);
-			} catch (CheckoutException e) {
-				throw new RuntimeException(e);
-			}
-		});
-	}
+            if (book.isEmpty() || member.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "all input fields must be non-empty");
+                return;
+            }
+            try {
+                ci.checkout(book, member);
+            } catch (CheckoutException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
-	private void addClearButtonListener(JButton butn) {
-		butn.addActionListener(evt -> {
+    private void addClearButtonListener(JButton butn) {
+        butn.addActionListener(evt -> {
 //			System.out.println("clear button is clicked");
-			this.bookField.setText("");
-			this.memberField.setText("");
-		});
-	}
+            this.bookField.setText("");
+            this.memberField.setText("");
+        });
+    }
 
-	@Override
-	public boolean isInitialized() {
-		
-		return isInitialized;
-	}
+    @Override
+    public boolean isInitialized() {
 
-	@Override
-	public void isInitialized(boolean val) {
-		isInitialized = val;
-	}
-	
+        return isInitialized;
+    }
+
+    @Override
+    public void isInitialized(boolean val) {
+        isInitialized = val;
+    }
+
 }
 
 

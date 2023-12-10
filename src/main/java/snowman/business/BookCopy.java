@@ -6,97 +6,83 @@ import java.io.Serializable;
  * Immutable class
  */
 final public class BookCopy implements Serializable {
-	
-	private static final long serialVersionUID = -63976228084869815L;
-//	private Book book;
-	private String bookISBN;
-	private String title;
 
-	private int copyNum;
-	private boolean isAvailable;
-//	BookCopy(Book book, int copyNum, boolean isAvailable) {
-	public BookCopy(String bookISBN,String title, int copyNum, boolean isAvailable) {
-//		this.book = book;
-		this.bookISBN = bookISBN;
-		this.title = title;
-		this.copyNum = copyNum;
-		this.isAvailable = isAvailable;
-	}
-	
-//	BookCopy(Book book, int copyNum) {
-public BookCopy(String bookISBN, int copyNum) {
-//		this.book = book;
-		this.bookISBN = bookISBN;
-		this.copyNum = copyNum;
-	}
-	
-	
-	public boolean isAvailable() {
-		return isAvailable;
-	}
+    private static final long serialVersionUID = -63976228084869815L;
+    private String bookISBN;
+    private String title;
+    public CheckoutRecordEntry checkoutRecordEntry;
+    private int copyNum;
+    private boolean isAvailable;
 
-	public int getCopyNum() {
-		return copyNum;
-	}
-	
-//	public Book getBook() {
-//		return book;
-//	}
-	
-	public void changeAvailability() {
-		isAvailable = !isAvailable;
-	}
-	
-	@Override
-	public boolean equals(Object ob) {
-		if(ob == null) return false;
-		if(!(ob instanceof BookCopy)) return false;
-		BookCopy copy = (BookCopy)ob;
-		return copy.getIsbn().equals(this.getIsbn()) && copy.copyNum == copyNum;
-	}
+    public BookCopy(String bookISBN, String title, int copyNum, boolean isAvailable) {
+        this.bookISBN = bookISBN;
+        this.title = title;
+        this.copyNum = copyNum;
+        this.isAvailable = isAvailable;
+    }
 
-	public String getIsbn() {
-		return this.bookISBN;
-	}
+    public boolean isAvailable() {
+        return isAvailable;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("copy# %d , available: %b", getCopyNum(), isAvailable());
-	}
+    public int getCopyNum() {
+        return copyNum;
+    }
 
-	public void checkout() {
-		this.isAvailable = false;
-	}
+    public void changeAvailability() {
+        isAvailable = !isAvailable;
+    }
 
-	public String getTitle() {
-		return this.title;
-	}
+    @Override
+    public boolean equals(Object ob) {
+        if (ob == null) return false;
+        if (!(ob instanceof BookCopy)) return false;
+        BookCopy copy = (BookCopy) ob;
+        return copy.getIsbn().equals(this.getIsbn()) && copy.copyNum == copyNum;
+    }
 
-	public void setISBN(String isbn) {
-		this.bookISBN = isbn;
-	}
+    public String getIsbn() {
+        return this.bookISBN;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @Override
+    public String toString() {
+        return String.format("copy# %d , available: %b", getCopyNum(), isAvailable());
+    }
 
-	public String getBookISBN() {
-		return bookISBN;
-	}
+    public void checkout() {
+        this.isAvailable = false;
+    }
 
-	public void setBookISBN(String bookISBN) {
-		this.bookISBN = bookISBN;
-	}
+    public String getTitle() {
+        return this.title;
+    }
 
-	public void setCopyNum(int copyNum) {
-		this.copyNum = copyNum;
-	}
+    public void setISBN(String isbn) {
+        this.bookISBN = isbn;
+    }
 
-	public void setAvailable(boolean available) {
-		isAvailable = available;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public boolean getAvailable() {
-		return isAvailable;
-	}
+    public String getBookISBN() {
+        return bookISBN;
+    }
+
+    public void setBookISBN(String bookISBN) {
+        this.bookISBN = bookISBN;
+    }
+
+    public void setCopyNum(int copyNum) {
+        this.copyNum = copyNum;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public boolean getAvailable() {
+        return isAvailable;
+    }
 }

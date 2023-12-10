@@ -14,13 +14,13 @@ public class CheckoutRecordModel extends AbstractTableModel {
 
     protected List<CheckoutRecordEntry> recordEntries;
 
-   protected String[] columnNames = new String[] {
-         "checkoutDate", "dueDate", "bookISBN","title","copyNum","isAvailable"
+    protected String[] columnNames = new String[]{
+            "checkoutDate", "dueDate", "bookISBN", "title", "copyNum", "isAvailable"
     };
 
 
     protected Class[] columnClasses = new Class[]{
-            LocalDate.class, LocalDate.class, String.class,String.class,int.class,boolean.class
+            LocalDate.class, LocalDate.class, String.class, String.class, int.class, boolean.class
     };
 
 
@@ -36,6 +36,7 @@ public class CheckoutRecordModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
     }
+
     @Override
     public int getRowCount() {
         if (recordEntries == null) {
@@ -56,13 +57,20 @@ public class CheckoutRecordModel extends AbstractTableModel {
         }
         CheckoutRecordEntry entry = recordEntries.get(rowIndex);
         switch (columnIndex) {
-            case 0: return entry.getCheckoutDate();
-            case 1: return entry.getDueDate();
-            case 2: return entry.getBookCopy().getBookISBN();
-            case 3: return entry.getBookCopy().getTitle();
-            case 4: return entry.getBookCopy().getCopyNum();
-            case 5: return entry.getBookCopy().isAvailable();
-            default: return null;
+            case 0:
+                return entry.getCheckoutDate();
+            case 1:
+                return entry.getDueDate();
+            case 2:
+                return entry.getBookCopy().getBookISBN();
+            case 3:
+                return entry.getBookCopy().getTitle();
+            case 4:
+                return entry.getBookCopy().getCopyNum();
+            case 5:
+                return entry.getBookCopy().isAvailable();
+            default:
+                return null;
         }
     }
 }

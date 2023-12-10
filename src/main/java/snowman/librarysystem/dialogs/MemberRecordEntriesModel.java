@@ -13,12 +13,12 @@ public class MemberRecordEntriesModel extends AbstractTableModel {
     protected Book book;
     protected List<CheckoutRecordEntry> entries;
 
-    protected String[] columnNames = new String[] {
-        "ISBN", "Title", "Copy#"
+    protected String[] columnNames = new String[]{
+            "ISBN", "Title", "Copy#"
     };
 
     protected Class[] columnClasses = new Class[]{
-        String.class, String.class, Integer.class
+            String.class, String.class, Integer.class
     };
 
 
@@ -34,6 +34,7 @@ public class MemberRecordEntriesModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
     }
+
     @Override
     public int getRowCount() {
         if (entries == null) {
@@ -54,10 +55,14 @@ public class MemberRecordEntriesModel extends AbstractTableModel {
         }
         CheckoutRecordEntry entry = entries.get(rowIndex);
         switch (columnIndex) {
-            case 0: return entry.bookCopy.getIsbn();
-            case 1: return entry.bookCopy.getTitle();
-            case 2: return entry.bookCopy.getCopyNum();
-            default: return null;
+            case 0:
+                return entry.bookCopy.getIsbn();
+            case 1:
+                return entry.bookCopy.getTitle();
+            case 2:
+                return entry.bookCopy.getCopyNum();
+            default:
+                return null;
         }
     }
 }

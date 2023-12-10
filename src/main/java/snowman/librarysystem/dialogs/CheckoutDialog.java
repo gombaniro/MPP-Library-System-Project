@@ -8,7 +8,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 public class CheckoutDialog extends Dialog {
-//    JTextField bookISBN;
+    //    JTextField bookISBN;
     JTextField memberIDField;
 
     JLabel memberIDLabel;
@@ -21,7 +21,7 @@ public class CheckoutDialog extends Dialog {
         setSize(300, 300);
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(3, 6));
-        memberIDLabel =  new JLabel("memberID: ");
+        memberIDLabel = new JLabel("memberID: ");
         formPanel.add(memberIDLabel);
         memberIDField = new JTextField(20);
         formPanel.add(memberIDField);

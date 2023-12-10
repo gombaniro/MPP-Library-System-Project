@@ -5,13 +5,16 @@ import java.util.HashMap;
 import snowman.business.Book;
 import snowman.business.LibraryMember;
 
-public interface DataAccess { 
-	public HashMap<String,Book> readBooksMap();
-	public HashMap<String,User> readUserMap();
-	public HashMap<String, LibraryMember> readMemberMap();
-	public void saveNewMember(LibraryMember member);
+public interface DataAccess {
+    HashMap<String, Book> readBooksMap();
 
-	public void saveNewCopy(HashMap<String, Book> books);
+    HashMap<String, User> readUserMap();
 
-	public void saveCheckoutRecord(HashMap<String, Book> books,HashMap<String, LibraryMember> members);
+    HashMap<String, LibraryMember> readMemberMap();
+
+    void saveNewMember(LibraryMember member);
+
+    void saveNewCopy(HashMap<String, Book> books);
+
+    void saveCheckoutRecord(HashMap<String, Book> books, HashMap<String, LibraryMember> members);
 }

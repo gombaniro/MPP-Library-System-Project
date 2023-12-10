@@ -18,8 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserRecordDialog extends Dialog {
-    private JTextField userIdField;
-    private JButton searchButton;
+    private final JTextField userIdField;
+    private final JButton searchButton;
     private JTable recordEntryTable;
 
     public UserRecordDialog(JFrame owner, String title, boolean modal) {
@@ -35,9 +35,9 @@ public class UserRecordDialog extends Dialog {
             LibraryMember user = membersMap.get(userId);
             if (user != null) {
                 recordEntryTable.setModel(
-                    new MemberRecordEntriesModel(
-                        user.getCheckoutRecord().getRecordEntryList()
-                    )
+                        new MemberRecordEntriesModel(
+                                user.getCheckoutRecord().getRecordEntryList()
+                        )
                 );
             }
         });

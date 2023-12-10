@@ -9,19 +9,19 @@ import java.util.List;
  */
 final public class CheckoutRecord implements Serializable {
 
-	private List<CheckoutRecordEntry> recordEntryList =  new ArrayList<>();
+    public LibraryMember libraryMember;
+    private final List<CheckoutRecordEntry> recordEntryList = new ArrayList<>();
 
-	public List<CheckoutRecordEntry> getRecordEntryList(){
-		return recordEntryList;
-	}
+    public CheckoutRecord(LibraryMember libraryMember) {
+        this.libraryMember = libraryMember;
+    }
 
-	public void addRecordEntry(CheckoutRecordEntry recordEntry){
-		recordEntryList.add(recordEntry);
-	}
+    public List<CheckoutRecordEntry> getRecordEntryList() {
+        return recordEntryList;
+    }
 
-	public CheckoutRecord(ArrayList<CheckoutRecordEntry> arrayList){
-		this.recordEntryList = arrayList;
-	}
-
-
+    public void addRecordEntry(CheckoutRecordEntry entry) {
+        recordEntryList.add(entry);
+        entry.checkoutRecord = this;
+    }
 }
