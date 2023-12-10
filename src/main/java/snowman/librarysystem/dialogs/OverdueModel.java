@@ -5,21 +5,29 @@ import snowman.business.BookCopy;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OverdueModel extends AbstractTableModel {
 
-    private final Book book;
+    private List<BookCopy> copies = new ArrayList<>();
 
     protected String[] columnNames = new String[]{
-            "ISBN", "Title", "Copy #", "Member Id", "Due Date",
+        "ISBN", "Title", "Copy #", "Member Id", "Due Date", "Overdue Status"
     };
 
     protected Class[] columnClasses = new Class[]{
-            String.class, String.class, int.class, String.class, LocalDate.class,
+        String.class, String.class, int.class, String.class, LocalDate.class, String.class
     };
 
     OverdueModel(Book book) {
-        this.book = book;
+        if (book != null) {
+            copies = Arrays.asList(book.getCopies());
+        }
     }
 
     // Information about each column
@@ -33,11 +41,7 @@ public class OverdueModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        if (book == null) {
-            return 0;
-        }
-
-        return book.getCopies().length;
+        return copies.size();
     }
 
     @Override
@@ -47,7 +51,7 @@ public class OverdueModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        BookCopy bookCopy = book.getCopies()[rowIndex];
+        BookCopy bookCopy = copies.get(rowIndex);
         System.out.println(bookCopy);
         // "bookISBN", "title", "copyNum", "memberId", "dueDate",
         switch (columnIndex) {
@@ -67,6 +71,16 @@ public class OverdueModel extends AbstractTableModel {
                     return "";
                 }
                 return bookCopy.checkoutRecordEntry.getDueDate();
+            case 5:
+                if (bookCopy.checkoutRecordEntry == null) return "Not overdue";
+
+                if (bookCopy.checkoutRecordEntry.checkoutRecord.libraryMember != null
+                        && LocalDate.now().isAfter(bookCopy.checkoutRecordEntry.getDueDate())
+                ) {
+                    return "Overdue";
+                }
+
+                return "Not overdue";
             default:
                 return null;
         }
