@@ -37,5 +37,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
-/src/docs/~$structions.docx
-/src/docs/~$adme_from_students.docx
+
+# app
+/src/main/java/snowman/dataaccess/storage/

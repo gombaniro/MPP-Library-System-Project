@@ -14,21 +14,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddBookCopyDialog extends Dialog {
+public class OverdueDialog extends Dialog {
+
     JTextField searchInput;
     JButton searchButton;
-    JButton copyButton;
     Book searchResult;
     JPanel tablePanel;
     JPanel tableContainer;
     JTable table;
 
-
-    public AddBookCopyDialog(JFrame owner, String title, boolean modal) {
+    public OverdueDialog(JFrame owner, String title, boolean modal) {
         super(owner, title, modal);
         setSize(400, 300);
         buildUI(owner);
-
     }
 
     private void buildUI(JFrame owner) {
@@ -52,7 +50,6 @@ public class AddBookCopyDialog extends Dialog {
 
             HashMap<String, Book> books = accessFacade.readBooksMap();
             for (Map.Entry<String, Book> item : books.entrySet()) {
-                System.out.println(item.getValue());
                 if (item.getValue().getIsbn().equals(getSearchISBN())) {
                     searchResult = item.getValue();
                 }
@@ -62,47 +59,20 @@ public class AddBookCopyDialog extends Dialog {
                 JOptionPane.showMessageDialog(owner, "There is no such book");
                 return;
             }
-            System.out.println("Search result:");
-            System.out.println(searchResult);
-
-            System.out.println("Search result copy:");
-            System.out.println(Arrays.toString(searchResult.getCopies()));
 
             buildUI(owner); // find a better solution instead of rebuild the entire UI
         });
+
         searchPanel.add(new JLabel("ISBN: "));
         searchPanel.add(searchInput);
         searchPanel.add(searchButton);
-        Border lineBorder = BorderFactory.createEtchedBorder();
-        Border titled = BorderFactory.createTitledBorder(lineBorder, "Find a book By ISBN");
-        searchPanel.setBorder(titled);
+        searchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Find a book By ISBN"));
+
         add(searchPanel, BorderLayout.NORTH);
 
         tableContainer = new JPanel();
         tableContainer.setLayout(new BoxLayout(tableContainer, BoxLayout.Y_AXIS));
-        JPanel addCopyPanel = new JPanel();
-        addCopyPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        copyButton = new JButton("New Copy");
-        copyButton.addActionListener((event) -> {
-            if (searchResult == null) {
-                JOptionPane.showMessageDialog(owner, "Cannot copy empty book");
-                return;
-            }
-            searchResult.addCopy();
-            DataAccessFacade accessFacade = new DataAccessFacade();
-            HashMap<String, Book> books = accessFacade.readBooksMap();
-            for (Map.Entry<String, Book> e : books.entrySet()) {
-                if (e.getValue().getIsbn().equals(searchResult.getIsbn())) {
-                    books.put(e.getKey(), searchResult);
-                    break;
-                }
-            }
-            accessFacade.saveNewCopy(books);
-            buildUI(owner);
 
-        });
-        addCopyPanel.add(copyButton);
-        tableContainer.add(addCopyPanel);
 
         tablePanel = new JPanel();
         addTable(tablePanel, searchResult);
@@ -116,7 +86,7 @@ public class AddBookCopyDialog extends Dialog {
     }
 
     void addTable(JPanel panel, Book book) {
-        table = new JTable(new BookCopyModel(book));
+        table = new JTable(new OverdueModel(book));
         JScrollPane jScrollPane = new JScrollPane(table);
         panel.add(jScrollPane);
     }

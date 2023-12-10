@@ -11,7 +11,7 @@ public class BookCopyModel extends AbstractTableModel {
     protected Book book;
     protected BookCopy[] copies;
 
-    protected String[] columnNames = new String[] {
+    protected String[] columnNames = new String[]{
             "ISBN", "Title", "Available", "Copy#"
     };
 
@@ -38,6 +38,7 @@ public class BookCopyModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
     }
+
     @Override
     public int getRowCount() {
         if (copies == null) {
@@ -58,11 +59,16 @@ public class BookCopyModel extends AbstractTableModel {
         }
         BookCopy copy = copies[rowIndex];
         switch (columnIndex) {
-            case 0: return copy.getIsbn();
-            case 1: return copy.getTitle();
-            case 2: return copy.isAvailable();
-            case 3: return copy.getCopyNum();
-            default: return null;
+            case 0:
+                return copy.getIsbn();
+            case 1:
+                return copy.getTitle();
+            case 2:
+                return copy.isAvailable();
+            case 3:
+                return copy.getCopyNum();
+            default:
+                return null;
         }
     }
 }

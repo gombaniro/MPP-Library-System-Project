@@ -42,7 +42,7 @@ public class CheckoutRecordDialog extends Dialog {
         searchButton = new JButton("search");
 
         searchButton.addActionListener(event -> {
-            if(searchInput == null){
+            if (searchInput == null) {
                 JOptionPane.showMessageDialog(owner, "input should not be empty");
                 return;
             }
@@ -50,12 +50,12 @@ public class CheckoutRecordDialog extends Dialog {
             membersMap = accessFacade.readMemberMap();
             String memberID = searchInput.getText();
             LibraryMember member = membersMap.get(memberID);
-            if(member == null){
+            if (member == null) {
                 JOptionPane.showMessageDialog(owner, "There is no such member");
                 return;
             }
 
-            if(member.getCheckoutRecord() == null){
+            if (member.getCheckoutRecord() == null) {
                 JOptionPane.showMessageDialog(owner, "Current member has no checkout record");
                 return;
             }
@@ -66,8 +66,8 @@ public class CheckoutRecordDialog extends Dialog {
 //                    searchResult = item.getValue();
 //                }
 //            }
-            searchResult = (ArrayList<CheckoutRecordEntry>)member.getCheckoutRecord().getRecordEntryList();
-            if(searchResult == null){
+            searchResult = (ArrayList<CheckoutRecordEntry>) member.getCheckoutRecord().getRecordEntryList();
+            if (searchResult == null) {
                 JOptionPane.showMessageDialog(owner, "Current member has no checkout record");
                 return;
             }
@@ -99,9 +99,9 @@ public class CheckoutRecordDialog extends Dialog {
     }
 
     void addTable(JPanel panel, List<CheckoutRecordEntry> entries) {
-         table = new JTable(new CheckoutRecordModel(entries));
-         JScrollPane jScrollPane = new JScrollPane(table);
-         panel.add(jScrollPane);
+        table = new JTable(new CheckoutRecordModel(entries));
+        JScrollPane jScrollPane = new JScrollPane(table);
+        panel.add(jScrollPane);
     }
 
     public String getSearchMemberID() {
