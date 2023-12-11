@@ -1,5 +1,6 @@
 package snowman.librarysystem.rulesets;
 
+import snowman.librarysystem.dialogs.AddAuthorDialog;
 import snowman.librarysystem.dialogs.AddBookCopyDialog;
 import snowman.librarysystem.dialogs.AddMemberDialog;
 
@@ -14,6 +15,7 @@ final public class RuleSetFactory {
 
     static {
         map.put(AddMemberDialog.class, new MemberRuleSet());
+        map.put(AddAuthorDialog.class, new AuthorRuleSet());
 
     }
 
