@@ -1,5 +1,6 @@
 package snowman.librarysystem.dialogs;
 
+import snowman.business.Address;
 import snowman.business.Author;
 import snowman.librarysystem.eventHandlers.DialogClosingListener;
 import snowman.librarysystem.rulesets.RuleException;
@@ -27,7 +28,7 @@ public class AddAuthorDialog extends Dialog {
 
     List<Author> authors;
 
-    public AddAuthorDialog(Frame owner, String title, boolean modal, List<Author> authors) {
+    public AddAuthorDialog(AddNewBookDialog owner, String title, boolean modal, List<Author> authors) {
         super(owner, title, modal);
         setSize(400, 400);
         this.authors = authors;
@@ -78,7 +79,13 @@ public class AddAuthorDialog extends Dialog {
                 JOptionPane.showMessageDialog(AddAuthorDialog.this, e.getMessage());
                 return;
             }
+            Address address = new Address(getStreet(), getCity(), getState(), getZip());
+            Author author = new Author(getFirstName(), getLastName(), getPhone(), address, getCredentials());
 
+            authors.add(author);
+            clearInputs();
+            setVisible(false);
+            owner.buildAuthorText();
         });
         actionPanel.add(cancelButton);
         actionPanel.add(confirmButton);
