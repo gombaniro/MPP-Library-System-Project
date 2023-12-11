@@ -5,12 +5,15 @@ import snowman.business.BookCopy;
 import snowman.business.CheckoutRecord;
 import snowman.business.CheckoutRecordEntry;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CheckoutRecordModel extends AbstractTableModel {
+public class CheckoutRecordModel extends AbstractTableModel{
 
     protected List<CheckoutRecordEntry> recordEntries;
 
@@ -73,4 +76,10 @@ public class CheckoutRecordModel extends AbstractTableModel {
                 return null;
         }
     }
+
+    public void setCheckoutRecordEntries(ArrayList<CheckoutRecordEntry> searchResult) {
+        this.recordEntries = searchResult;
+    }
+
+
 }

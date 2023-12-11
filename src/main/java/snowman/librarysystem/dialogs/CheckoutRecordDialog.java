@@ -10,101 +10,112 @@ import snowman.librarysystem.eventHandlers.DialogClosingListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
 
 public class CheckoutRecordDialog extends Dialog {
-    JTextField searchInput;
+    JTextField searchInputField;
     JButton searchButton;
     ArrayList<CheckoutRecordEntry> searchResult;
     LibraryMember member;
     JPanel tablePanel;
-    JPanel tableContainer;
+//    JPanel table;
     JTable table;
 
-    HashMap<String, LibraryMember> membersMap;
+    JLabel memberInfoLabel;
+
+    DataAccessFacade facade = new DataAccessFacade();
+
+    HashMap<String, LibraryMember> membersMap = facade.readMemberMap() ;
 
     public CheckoutRecordDialog(JFrame owner, String title, boolean modal) {
         super(owner, title, modal);
         setSize(400, 300);
         buildUI(owner);
-
     }
 
     private void buildUI(JFrame owner) {
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new GridLayout(1, 3));
-        searchInput = new JTextField(10);
+        searchInputField = new JTextField(10);
         searchButton = new JButton("search");
-
-        searchButton.addActionListener(event -> {
-            if (searchInput == null) {
-                JOptionPane.showMessageDialog(owner, "input should not be empty");
-                return;
-            }
-            DataAccessFacade accessFacade = new DataAccessFacade();
-            membersMap = accessFacade.readMemberMap();
-            String memberID = searchInput.getText();
-            LibraryMember member = membersMap.get(memberID);
-            if (member == null) {
-                JOptionPane.showMessageDialog(owner, "There is no such member");
-                return;
-            }
-
-            if (member.getCheckoutRecord() == null) {
-                JOptionPane.showMessageDialog(owner, "Current member has no checkout record");
-                return;
-            }
-//            HashMap<String, Book> books = accessFacade.readBooksMap();
-//            for(Map.Entry<String, Book> item: books.entrySet()) {
-//                System.out.println(item.getValue());
-//                if (item.getValue().getIsbn().equals(getSearchISBN())) {
-//                    searchResult = item.getValue();
-//                }
-//            }
-            searchResult = (ArrayList<CheckoutRecordEntry>) member.getCheckoutRecord().getRecordEntryList();
-            if (searchResult == null) {
-                JOptionPane.showMessageDialog(owner, "Current member has no checkout record");
-                return;
-            }
-            buildUI(owner); // find a better solution instead of rebuild the entire UI
+        searchButton.addActionListener((ActionEvent e) ->{
+            search(searchInputField.getText());
         });
+
         searchPanel.add(new JLabel("Librarian Member ID: "));
-        searchPanel.add(searchInput);
+        searchPanel.add(searchInputField);
         searchPanel.add(searchButton);
-        Border lineBorder = BorderFactory.createEtchedBorder();
-        Border titled = BorderFactory.createTitledBorder(lineBorder, "");
-        searchPanel.setBorder(titled);
+        memberInfoLabel = new JLabel();
+        searchPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY,5));
         add(searchPanel, BorderLayout.NORTH);
 
-        tableContainer = new JPanel();
-        tableContainer.setLayout(new BoxLayout(tableContainer, BoxLayout.Y_AXIS));
-        JPanel addCopyPanel = new JPanel();
-        addCopyPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        tableContainer.add(addCopyPanel);
+        tablePanel = new JPanel(new BorderLayout());
+        table = new JTable(new CheckoutRecordModel(searchResult));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane jScrollPane = new JScrollPane(table);
 
-        tablePanel = new JPanel();
-        addTable(tablePanel, searchResult);
-        tableContainer.add(tablePanel);
-
-        tablePanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 30));  // to be removed
-        add(tableContainer, BorderLayout.CENTER);
+        tablePanel.add(jScrollPane,BorderLayout.CENTER);
+        tablePanel.add(memberInfoLabel,BorderLayout.NORTH);
+        tablePanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 5));  // to be removed
+        add(tablePanel, BorderLayout.CENTER);
         setLocationRelativeTo(owner);
         addWindowListener(new DialogClosingListener(this));
-        pack();
+        setBounds(100,100,1000,600);
+        setLocationRelativeTo(null);
     }
 
-    void addTable(JPanel panel, List<CheckoutRecordEntry> entries) {
-        table = new JTable(new CheckoutRecordModel(entries));
-        JScrollPane jScrollPane = new JScrollPane(table);
-        panel.add(jScrollPane);
-    }
+    public void search(String memberID) {
+        if(searchInputField == null || memberID.isEmpty()){
+            JOptionPane.showMessageDialog(null, "input should not be empty","No empty Check",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(membersMap == null){
+            membersMap = facade.readMemberMap();
+        }
+        LibraryMember member = membersMap.get(memberID);
+        if(member == null){
+            JOptionPane.showMessageDialog(null, "There is no such member","Search Result",JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+        if(member.getCheckoutRecord() == null){
+            JOptionPane.showMessageDialog(null, "Current member has no checkout record","Search Result",JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+        searchResult = (ArrayList<CheckoutRecordEntry>)member.getCheckoutRecord().getRecordEntryList();
+        if(searchResult == null){
+            JOptionPane.showMessageDialog(null, "Current member has no checkout record","Search Result",JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+        memberInfoLabel.setText(member.toString());
+        memberInfoLabel.setFont(new Font("MV Boli",Font.BOLD,15));
+        memberInfoLabel.setForeground(Color.GREEN);
+        memberInfoLabel.setBackground(Color.BLACK);
+        memberInfoLabel.setOpaque(true);
+        memberInfoLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE,5));
+        // Update the table model with the new search result
+        CheckoutRecordModel model = (CheckoutRecordModel) table.getModel();
+        model.setCheckoutRecordEntries(searchResult);
 
-    public String getSearchMemberID() {
-        return searchInput.getText();
+        // Notify the table that the model has changed
+        model.fireTableDataChanged();
+        for (CheckoutRecordEntry entry : searchResult) {
+            System.out.printf("%-20s %-20s %-20s %-20s %-20s\n",
+                    entry.getBookCopy().getTitle(),
+                    entry.getBookCopy().getBookISBN(),
+                    entry.getBookCopy().getCopyNum(),
+                    entry.getCheckoutDate(),
+                    entry.getDueDate());
+        }
     }
 }

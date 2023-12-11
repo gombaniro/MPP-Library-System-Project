@@ -1,0 +1,8 @@
+Cases done:
+* login
+* Add a new library member to the system
+* Checkout a book (if available) for a library member.
+* Add a copy of an existing book to the library collection.
+* [extra] Add a book to the library collection.
+* [extra] Given a library member id, print (to console) the checkout record of that library member
+* [extra] Determine whether a given copy of a publication is overdue and which library member has it in his/her possession.
