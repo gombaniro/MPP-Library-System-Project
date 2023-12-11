@@ -4,10 +4,7 @@ import snowman.business.ControllerInterface;
 import snowman.business.SystemController;
 import snowman.dataaccess.Auth;
 import snowman.librarysystem.dialogs.*;
-import snowman.librarysystem.eventHandlers.AddCopyBookListener;
-import snowman.librarysystem.eventHandlers.AddMemberListener;
-import snowman.librarysystem.eventHandlers.CheckoutRecordListener;
-import snowman.librarysystem.eventHandlers.OverdueListener;
+import snowman.librarysystem.eventHandlers.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +20,8 @@ public class MainPanel extends JPanel implements LibWindow {
     public final static MainPanel INSTANCE = new MainPanel();
     JMenuBar menuBar;
     JButton allBookIds, allMemberIds;
-    JButton addBook;
+    JButton addCopyBook;
+    JButton addNewBook;
     JButton addMember, checkoutButton, checkoutRecordButton;
     private boolean isInitialized = false;
 
@@ -75,16 +73,23 @@ public class MainPanel extends JPanel implements LibWindow {
                 || SystemController.currentAuth == Auth.BOTH) {
 
             // Add a book menu
-            addBook = new JButton("Add Book");
-            addBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
+            addCopyBook = new JButton("Book Copy");
+            addCopyBook.addActionListener(new AddCopyBookListener(new AddBookCopyDialog(
                     null, "Add a book copy", true)));
+
+            addNewBook = new JButton("New Book");
+            addNewBook.addActionListener(new AddNewBookListener(new AddNewBookDialog(
+                    null, "Add a new book", true)));
+
 
             // Add a member menu
             addMember = new JButton("Add Member");
             addMember.addActionListener(new AddMemberListener(new AddMemberDialog(
                     null, "Add a member", true)));
 
-            menuBar.add(addBook);
+            menuBar.add(addCopyBook);
+            menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+            menuBar.add(addNewBook);
             menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
             menuBar.add(addMember);
         }
