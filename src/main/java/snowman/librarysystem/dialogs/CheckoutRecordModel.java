@@ -1,29 +1,23 @@
 package snowman.librarysystem.dialogs;
 
-import snowman.business.Book;
-import snowman.business.BookCopy;
-import snowman.business.CheckoutRecord;
 import snowman.business.CheckoutRecordEntry;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class CheckoutRecordModel extends AbstractTableModel{
+public class CheckoutRecordModel extends AbstractTableModel {
 
     protected List<CheckoutRecordEntry> recordEntries;
 
     protected String[] columnNames = new String[]{
-            "checkoutDate", "dueDate", "bookISBN", "title", "copyNum", "isAvailable"
+            "checkoutDate", "dueDate", "bookISBN", "title", "copyNum"
     };
 
 
     protected Class[] columnClasses = new Class[]{
-            LocalDate.class, LocalDate.class, String.class, String.class, int.class, boolean.class
+            LocalDate.class, LocalDate.class, String.class, String.class, int.class
     };
 
 
@@ -70,8 +64,6 @@ public class CheckoutRecordModel extends AbstractTableModel{
                 return entry.getBookCopy().getTitle();
             case 4:
                 return entry.getBookCopy().getCopyNum();
-            case 5:
-                return entry.getBookCopy().isAvailable();
             default:
                 return null;
         }

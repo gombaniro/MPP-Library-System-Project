@@ -61,13 +61,13 @@ public class MainPanel extends JPanel implements LibWindow {
         menuBar.add(allMemberIds);
         menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 
-        JButton showUserRecords = new JButton("Show User Records");
-        showUserRecords.addActionListener(new UserRecordListener(
-                new UserRecordDialog(null, "Show User Records", true)
-        ));
-        menuBar.add(showUserRecords);
+//        JButton showUserRecords = new JButton("Show User Records");
+//        showUserRecords.addActionListener(new UserRecordListener(
+//                new UserRecordDialog(null, "Show User Records", true)
+//        ));
+//        menuBar.add(showUserRecords);
 
-        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+ //       menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
 
         if (SystemController.currentAuth == Auth.ADMIN
                 || SystemController.currentAuth == Auth.BOTH) {
@@ -101,12 +101,13 @@ public class MainPanel extends JPanel implements LibWindow {
             checkoutButton.addActionListener(new CheckoutButtonListener());
             menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
             menuBar.add(checkoutButton);
-            checkoutRecordButton = new JButton("Checkout Record");
-            checkoutRecordButton.addActionListener(new CheckoutRecordListener(new CheckoutRecordDialog(
-                    null, "Show a librarian member's checkout record", true)));
-            menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
-            menuBar.add(checkoutRecordButton);
+
         }
+        checkoutRecordButton = new JButton("Checkout Record");
+        checkoutRecordButton.addActionListener(new CheckoutRecordListener(new CheckoutRecordDialog(
+                null, "Show a librarian member's checkout record", true)));
+        menuBar.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between buttons
+        menuBar.add(checkoutRecordButton);
 
         JButton overdueButton = new JButton("Overdue");
         overdueButton.addActionListener(new OverdueListener(new OverdueDialog(null, "Overdue", true)));
