@@ -1,6 +1,7 @@
 package snowman.librarysystem.dialogs;
 
 import snowman.business.Author;
+import snowman.librarysystem.eventHandlers.AddAuthorListener;
 import snowman.librarysystem.eventHandlers.DialogClosingListener;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class AddNewBookDialog extends Dialog {
     JTextField titleInput;
     JTextField maximumCheckoutLengthInput;
     JTextField numberOfCopiesInput;
-    List<Author> authors;
+    List<Author> authors = new ArrayList<>();
 
 
     JButton cancelButton;
@@ -42,6 +43,12 @@ public class AddNewBookDialog extends Dialog {
         formPanel.add(new JLabel("Number Of Copies: "));
         numberOfCopiesInput = new JTextField(" ");
         formPanel.add(numberOfCopiesInput);
+
+        formPanel.add(new JLabel("Authors: "));
+        JButton newAuthorInput = new JButton("newAuthor");
+        newAuthorInput.addActionListener(new AddAuthorListener(new AddAuthorDialog(
+                owner, "Add a book author", true, authors)));
+        formPanel.add(newAuthorInput);
 
 
         Border emptyBorder = BorderFactory.createEmptyBorder(20, 20, 20, 20);
