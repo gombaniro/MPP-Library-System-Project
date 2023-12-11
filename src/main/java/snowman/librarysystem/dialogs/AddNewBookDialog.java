@@ -14,9 +14,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 
 
 public class AddNewBookDialog extends Dialog {
@@ -25,13 +25,9 @@ public class AddNewBookDialog extends Dialog {
     JTextField maximumCheckoutLengthInput;
     JTextField numberOfCopiesInput;
     List<Author> authors = new ArrayList<>();
-    JPanel authorsPanel;
-    JPanel centerPanel;
-
-    {
-        authors.add(new Author("Joe", "Thomas", "641-445-2123", null, "A happy man is he."));
-        authors.add(new Author("John", "Norman", "641-445-2123", null, "A happy man is he."));
-    }
+    JPanel authorsPanel = new JPanel();
+    JPanel centerPanel = new JPanel();
+    JLabel htmlContentLabel = new JLabel();
 
 
     JButton cancelButton;
@@ -40,7 +36,7 @@ public class AddNewBookDialog extends Dialog {
 
     public AddNewBookDialog(JFrame owner, String title, boolean modal) {
         super(owner, title, modal);
-        setSize(300, 320);
+        setSize(300, 400);
         buildUI();
 
     }
@@ -50,7 +46,7 @@ public class AddNewBookDialog extends Dialog {
         formPanel.setLayout(new GridLayout(5, 2));
         formPanel.add(new JLabel("ISBN: "));
 
-        ISBNInput = new JTextField(" ");
+        ISBNInput = new JTextField("");
         formPanel.add(ISBNInput);
         formPanel.add(new JLabel("Title: "));
         titleInput = new JTextField("");
@@ -60,7 +56,7 @@ public class AddNewBookDialog extends Dialog {
         formPanel.add(maximumCheckoutLengthInput);
 
         formPanel.add(new JLabel("Number Of Copies: "));
-        numberOfCopiesInput = new JTextField(" ");
+        numberOfCopiesInput = new JTextField("");
         formPanel.add(numberOfCopiesInput);
 
         formPanel.add(new JLabel("Authors: "));
@@ -71,17 +67,16 @@ public class AddNewBookDialog extends Dialog {
 
 
 
-        Border emptyBorder = BorderFactory.createEmptyBorder(20, 20, 20, 20);
-        formPanel.setBorder(emptyBorder);
+         updateAuthorLabelText();
+         authorsPanel.add(htmlContentLabel);
 
 
-         authorsPanel = new JPanel();
-         buildAuthorText();
-
-        JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.add(formPanel);
         centerPanel.add(authorsPanel);
+
+        Border emptyBorder = BorderFactory.createEmptyBorder(10, 20, 10, 20);
+        centerPanel.setBorder(emptyBorder);
 
         add(centerPanel, BorderLayout.CENTER);
         JPanel actionPanel = new JPanel();
@@ -117,7 +112,7 @@ public class AddNewBookDialog extends Dialog {
         pack();
     }
 
-    public void buildAuthorText() {
+    public void updateAuthorLabelText() {
         StringBuilder text = new StringBuilder("<html><ul>");
         for (Author author : authors) {
             text.append(String.format("<li title=\"%s\"><b>%s %s</b></li>", author.getBio(), author.getFirstName(), author.getLastName()));
@@ -127,7 +122,7 @@ public class AddNewBookDialog extends Dialog {
         for(Author a: authors) {
             System.out.printf("%s %s %s\n",a.getFirstName(), a.getLastName(), a.getBio());
         }
-        authorsPanel.add(new JLabel(text.toString()));
+        htmlContentLabel.setText(text.toString());
     }
 
     private void clearInputs() {

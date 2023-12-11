@@ -85,7 +85,7 @@ public class AddAuthorDialog extends Dialog {
             authors.add(author);
             clearInputs();
             setVisible(false);
-            owner.buildAuthorText();
+            owner.updateAuthorLabelText();
         });
         actionPanel.add(cancelButton);
         actionPanel.add(confirmButton);
