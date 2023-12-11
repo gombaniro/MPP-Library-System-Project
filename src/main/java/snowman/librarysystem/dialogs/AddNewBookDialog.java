@@ -3,6 +3,9 @@ package snowman.librarysystem.dialogs;
 import snowman.business.Author;
 import snowman.librarysystem.eventHandlers.AddAuthorListener;
 import snowman.librarysystem.eventHandlers.DialogClosingListener;
+import snowman.librarysystem.rulesets.RuleException;
+import snowman.librarysystem.rulesets.RuleSet;
+import snowman.librarysystem.rulesets.RuleSetFactory;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -60,6 +63,13 @@ public class AddNewBookDialog extends Dialog {
         cancelButton.addActionListener(event -> setVisible(false));
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(event -> {
+            try {
+                RuleSet rules = RuleSetFactory.getRuleSet(AddNewBookDialog.this);
+                rules.applyRules(AddNewBookDialog.this);
+            } catch (RuleException e) {
+                JOptionPane.showMessageDialog(AddNewBookDialog.this, e.getMessage());
+                return;
+            }
         });
         actionPanel.add(cancelButton);
         actionPanel.add(confirmButton);

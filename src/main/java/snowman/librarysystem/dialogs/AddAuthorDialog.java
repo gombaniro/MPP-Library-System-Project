@@ -126,7 +126,9 @@ public class AddAuthorDialog extends Dialog {
         return zipInput.getText();
     }
 
-    public String getCredentials() { return credentialsInput.getText();}
+    public String getCredentials() {
+        return credentialsInput.getText();
+    }
 
 
 }
