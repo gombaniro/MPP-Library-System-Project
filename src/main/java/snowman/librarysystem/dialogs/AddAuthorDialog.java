@@ -79,6 +79,7 @@ public class AddAuthorDialog extends Dialog {
                 JOptionPane.showMessageDialog(AddAuthorDialog.this, e.getMessage());
                 return;
             }
+
             Address address = new Address(getStreet(), getCity(), getState(), getZip());
             Author author = new Author(getFirstName(), getLastName(), getPhone(), address, getCredentials());
 
@@ -103,6 +104,7 @@ public class AddAuthorDialog extends Dialog {
         cityInput.setText("");
         streetInput.setText("");
         zipInput.setText("");
+        credentialsInput.setText("");
     }
 
     public String getFirstName() {
