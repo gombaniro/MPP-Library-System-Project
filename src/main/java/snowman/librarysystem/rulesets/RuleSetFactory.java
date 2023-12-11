@@ -1,22 +1,23 @@
 package snowman.librarysystem.rulesets;
 
 import snowman.librarysystem.dialogs.AddAuthorDialog;
-import snowman.librarysystem.dialogs.AddBookCopyDialog;
 import snowman.librarysystem.dialogs.AddMemberDialog;
+import snowman.librarysystem.dialogs.AddNewBookDialog;
 
 import java.awt.*;
 import java.util.HashMap;
 
 final public class RuleSetFactory {
-    private RuleSetFactory() {
-    }
-
     static HashMap<Class<? extends Component>, RuleSet> map = new HashMap<>();
 
     static {
         map.put(AddMemberDialog.class, new MemberRuleSet());
         map.put(AddAuthorDialog.class, new AuthorRuleSet());
+        map.put(AddNewBookDialog.class, new BookRuleSet());
 
+    }
+
+    private RuleSetFactory() {
     }
 
     public static RuleSet getRuleSet(Component c) {

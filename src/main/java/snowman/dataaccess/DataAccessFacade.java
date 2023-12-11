@@ -92,6 +92,7 @@ public class DataAccessFacade implements DataAccess {
 
     @Override
     public void saveNewCopy(HashMap<String, Book> books) {
+
         saveToStorage(StorageType.BOOKS, books);
     }
 
@@ -102,6 +103,13 @@ public class DataAccessFacade implements DataAccess {
         saveToStorage(StorageType.BOOKS, books);
         //2.update memebers ,add checkout record.
         saveToStorage(StorageType.MEMBERS, members);
+    }
+
+    @Override
+    public void saveNewBook(Book book) {
+        HashMap<String, Book> books = readBooksMap();
+        books.put(book.getIsbn(), book);
+        saveToStorage(StorageType.BOOKS, books);
     }
 
 
