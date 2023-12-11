@@ -10,10 +10,14 @@ import java.util.List;
 final public class CheckoutRecord implements Serializable {
 
     public LibraryMember libraryMember;
-    private final List<CheckoutRecordEntry> recordEntryList = new ArrayList<>();
+    private List<CheckoutRecordEntry> recordEntryList = new ArrayList<>();
 
     public CheckoutRecord(LibraryMember libraryMember) {
         this.libraryMember = libraryMember;
+    }
+
+    public CheckoutRecord(ArrayList<CheckoutRecordEntry> checkoutRecordEntries) {
+        this.recordEntryList = checkoutRecordEntries;
     }
 
     public List<CheckoutRecordEntry> getRecordEntryList() {

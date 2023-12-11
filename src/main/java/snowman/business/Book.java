@@ -9,17 +9,18 @@ import java.util.*;
 final public class Book implements Serializable {
 
     private static final long serialVersionUID = 6110690276685962829L;
-    private final List<BookCopy> copies = new ArrayList<>();
+    private List<BookCopy> copies = new ArrayList<>();
     private final List<Author> authors;
     private final String isbn;
     private final String title;
     private final int maxCheckoutLength;
 
-    public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
+    public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors, ArrayList<BookCopy> bookCopies) {
         this.isbn = isbn;
         this.title = title;
         this.maxCheckoutLength = maxCheckoutLength;
         this.authors = Collections.unmodifiableList(authors);
+        this.copies = bookCopies;
     }
 
     public void updateCopies(BookCopy copy) {

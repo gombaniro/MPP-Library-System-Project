@@ -2,6 +2,7 @@ package snowman.librarysystem.dialogs;
 
 import snowman.business.Author;
 import snowman.business.Book;
+import snowman.business.BookCopy;
 import snowman.dataaccess.DataAccess;
 import snowman.dataaccess.DataAccessFacade;
 import snowman.librarysystem.eventHandlers.AddAuthorListener;
@@ -92,7 +93,7 @@ public class AddNewBookDialog extends Dialog {
             DataAccess accessFacade = new DataAccessFacade();
             int maxCheckoutLen = Integer.parseInt(getMaximumCheckoutLength());
             int numOfCopies = Integer.parseInt(getNumberOfCopies());
-            Book book = new Book(getISBN(),getBookTitle(), maxCheckoutLen , authors);
+            Book book = new Book(getISBN(),getBookTitle(), maxCheckoutLen , authors, new ArrayList<BookCopy>());
             for(int i = 1; i < numOfCopies; i++ )
                 book.addCopy();
             accessFacade.saveNewBook(book);

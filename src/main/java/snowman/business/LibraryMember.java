@@ -1,14 +1,13 @@
 package snowman.business;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 final public class LibraryMember extends Person implements Serializable {
 
     private String memberId;
     private final CheckoutRecord checkoutRecord;
 
-    public LibraryMember(String memberId, String fname, String lname, String tel, Address add) {
+    public LibraryMember(String memberId, String fname, String lname, String tel, Address add, CheckoutRecord record2) {
         super(fname, lname, tel, add);
         this.memberId = memberId;
         checkoutRecord = new CheckoutRecord(this);

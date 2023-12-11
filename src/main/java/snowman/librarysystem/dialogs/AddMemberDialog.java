@@ -98,8 +98,8 @@ public class AddMemberDialog extends Dialog {
                     getFirstName(),
                     getLastName(),
                     getPhone(),
-                    address
-            );
+                    address,
+                    new CheckoutRecord(new ArrayList<CheckoutRecordEntry>()));
 
             for (Map.Entry<String, LibraryMember> entry : keyMembers.entrySet()) {
                 LibraryMember member = entry.getValue();
