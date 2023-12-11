@@ -13,10 +13,8 @@ import snowman.librarysystem.rulesets.RuleSetFactory;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-
 
 
 public class AddNewBookDialog extends Dialog {
@@ -113,11 +111,11 @@ public class AddNewBookDialog extends Dialog {
     }
 
     public void updateAuthorLabelText() {
-        StringBuilder text = new StringBuilder("<html><ul>");
+        StringBuilder text = new StringBuilder("<html><ol>");
         for (Author author : authors) {
             text.append(String.format("<li title=\"%s\"><b>%s %s</b></li>", author.getBio(), author.getFirstName(), author.getLastName()));
         }
-        text.append("</ul></html>");
+        text.append("</ol></html>");
 
         for(Author a: authors) {
             System.out.printf("%s %s %s\n",a.getFirstName(), a.getLastName(), a.getBio());
